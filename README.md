@@ -11,9 +11,6 @@ Ultimately, when we launch the audit, this repo will be made public and will con
 Some of the checklists in this doc are for **C4 (🐺)** and some of them are for **you as the audit sponsor (⭐️)**.
 
 ---
-
-# Audit setup
-
 # Repo setup
 
 ## ⭐️ Sponsor: Add code to this repo

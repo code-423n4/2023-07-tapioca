@@ -47,21 +47,21 @@ Under "SPONSORS ADD INFO HERE" heading below, include the following:
 ---
 
 # Tapioca audit details
-- Total Prize Pool: XXX XXX USDC (Notion: Total award pool)
-  - HM awards: XXX XXX USDC (Notion: HM (main) pool)
-  - Analysis awards: XXX XXX USDC (Notion: Analysis pool)
-  - QA awards: XXX XXX USDC (Notion: QA pool)
-  - Bot Race awards: XXX XXX USDC (Notion: Bot Race pool)
-  - Gas awards: XXX XXX USDC (Notion: Gas pool)
-  - Judge awards: XXX XXX USDC (Notion: Judge Fee)
-  - Lookout awards: XXX XXX USDC (Notion: Sum of Pre-sort fee + Pre-sort early bonus)
-  - Scout awards: $500 USDC (Notion: Scout fee - but usually $500 USDC)
-  - Mitigation Review: XXX XXX USDC (*Opportunity goes to top 3 certified wardens based on placement in this audit.*)
+- Total Prize Pool: $390,000 USDC 
+  - HM awards: $222,338 USDC 
+  - Analysis awards: $13,476 USDC 
+  - QA awards: $6,737 USDC 
+  - Bot Race awards: $20,212 USDC 
+  - Gas awards: $6,737 USDC 
+  - Judge awards: $26,000 USDC 
+  - Lookout awards: $12,000 USDC 
+  - Scout awards: $500 USDC 
+  - Mitigation Review: $82,000 USDC (*Opportunity goes to top 5 certified wardens based on placement in this audit.*)
 - Join [C4 Discord](https://discord.gg/code4rena) to register
-- Submit findings [using the C4 form](https://code4rena.com/contests/2023-07-tapioca/submit)
+- Submit findings [using the C4 form](https://code4rena.com/contests/2023-07-tapioca-dao/submit)
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts July 05, 2023 20:00 UTC 
-- Ends July 19, 2023 20:00 UTC 
+- Ends Aug 04, 2023 20:00 UTC 
 
 ## Automated Findings / Publicly Known Issues
 

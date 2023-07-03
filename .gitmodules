@@ -1,0 +1,18 @@
+[submodule "tapioca-yieldbox-strategies-audit"]
+	path = tapioca-yieldbox-strategies-audit
+	url = https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit
+[submodule "tapioca-bar-audit"]
+	path = tapioca-bar-audit
+	url = https://github.com/Tapioca-DAO/tapioca-bar-audit
+[submodule "tap-token-audit"]
+	path = tap-token-audit
+	url = https://github.com/Tapioca-DAO/tap-token-audit
+[submodule "tapioca-periph-audit"]
+	path = tapioca-periph-audit
+	url = https://github.com/Tapioca-DAO/tapioca-periph-audit
+[submodule "tapiocaz-audit"]
+	path = tapiocaz-audit
+	url = https://github.com/Tapioca-DAO/tapiocaz-audit
+[submodule "tapioca-mocks-audit"]
+	path = tapioca-mocks-audit
+	url = https://github.com/Tapioca-DAO/tapioca-mocks-audit

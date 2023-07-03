@@ -90,10 +90,6 @@ The other repos are here to support the ecosystem as well as to create a synergy
 
 # Scope
 
-*List all files in scope in the table below (along with hyperlinks) -- and feel free to add notes here to emphasize areas of focus.*
-
-*For line of code counts, we recommend using [cloc](https://github.com/AlDanial/cloc).* 
-
 ## tapioca-bar
 | Contract | SLOC | Purpose | Libraries used |  
 | ----------- | ----------- | ----------- | ----------- |
@@ -246,5 +242,6 @@ Set `enabled` key to `true` in `hardhat.export.ts>config.gasReporter`
 ```
 
 # Notes
+- The docs provide a lot of information about the protocol and the user flow, given the size of the protocol, we encourage checking it at https://docs.tapioca.xyz/tapioca/.
 - `MagnetarV2` does not have access control by design. The underlying is the one that implement those (Can be found on `TOFT`, `Singularity`, `USDO`, `TapiocaOptionBroker`).
 - Re-entrency on ownable contract should be considered as a vulnerability only if the last call leads to an external call with potential vulnerability.

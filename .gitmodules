@@ -16,3 +16,6 @@
 [submodule "tapioca-mocks-audit"]
 	path = tapioca-mocks-audit
 	url = https://github.com/Tapioca-DAO/tapioca-mocks-audit
+[submodule "YieldBox"]
+	path = YieldBox
+	url = https://github.com/Tapioca-DAO/YieldBox

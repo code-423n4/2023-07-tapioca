@@ -15,6 +15,7 @@
 - Starts July 05, 2023 20:00 UTC 
 - Ends August 04, 2023 20:00 UTC 
 
+
 ## Automated Findings / Publicly Known Issues
 
 Automated findings output for the audit can be found [here](add link to report) within 24 hours of audit opening.

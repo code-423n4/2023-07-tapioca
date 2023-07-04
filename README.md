@@ -112,6 +112,20 @@ The other repos are here to support the ecosystem as well as to create a synergy
 | [./contracts/oracle/implementations/GLPOracle.sol](./contracts/oracle/implementations/GLPOracle.sol) | 38 | GLP Oracle| |
 
 
+## tapioca-yieldbox-strats
+| Contract | SLOC | Purpose | Libraries used |  
+| ----------- | ----------- | ----------- | ----------- |
+| [./contracts/convex/ConvexTricryptoStrategy.sol](./contracts/convex/ConvexTricryptoStrategy.sol) | 289 | TriCrypto strat |[@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
+| [./contracts/glp/GlpStrategy.sol](./contracts/glp/GlpStrategy.sol) | 240 | GLP strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@uniswap/v3-core/](https://github.com/Uniswap/v3-core)|
+| [./contracts/balancer/BalancerStrategy.sol](./contracts/balancer/BalancerStrategy.sol) | 208 | Balancer strat |[@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
+| [./contracts/stargate/StargateStrategy.sol](./contracts/stargate/StargateStrategy.sol) | 182 | Stargate strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
+| [./contracts/aave/AaveStrategy.sol](./contracts/aave/AaveStrategy.sol) | 190 | Stargate strat |  [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
+| [./contracts/curve/TricryptoLPStrategy.sol](./contracts/curve/TricryptoLPStrategy.sol) | 176 | TriCrypto LP strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
+| [./contracts/curve/TricryptoNativeStrategy.sol](./contracts/curve/TricryptoNativeStrategy.sol) | 175 | TriCrypto native strat |  [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
+| [./contracts/lido/LidoEthStrategy.sol](./contracts/lido/LidoEthStrategy.sol) | 176 | TriCrypto LP strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
+| [./contracts/compound/CompoundStrategy.sol](./contracts/compound/CompoundStrategy.sol) | 94 | Compound strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
+| [./contracts/yearn/YearnStrategy.sol](./contracts/yearn/YearnStrategy.sol) | 82 | Yearn strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
+
 ## yieldbox
 | Contract | SLOC | Purpose | Libraries used |  
 | ----------- | ----------- | ----------- | ----------- |

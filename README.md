@@ -152,17 +152,17 @@ twAML is a simple model that is used in `twTAP` and `TapiocaOptionBroker`. A det
 ```
 - If you have a public code repo, please share it here:  https://github.com/Tapioca-DAO/Tapioca-bar https://github.com/Tapioca-DAO/tap-token https://github.com/Tapioca-DAO/TapiocaZ https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies https://github.com/Tapioca-DAO/YieldBox
 - How many contracts are in scope?:   62
-- Total SLoC for these contracts?:  12711
-- How many external imports are there?: 10 
+- Total SLoC for these contracts?:  13499
+- How many external imports are there?: 15
 - How many separate interfaces and struct definitions are there for the contracts within scope?:  50
 - Does most of your code generally use composition or inheritance?:   Inheritance
 - How many external calls?:   10
 - What is the overall line coverage percentage provided by your tests?:  90
-- Is there a need to understand a separate part of the codebase / get context in order to audit this part of the protocol?:   
-- Please describe required context:   
-- Does it use an oracle?:  
+- Is there a need to understand a separate part of the codebase / get context in order to audit this part of the protocol?:  false 
+- Please describe required context:   n/a
+- Does it use an oracle?:  Custom oracle that may use Chainlink or UniV3 or best of Chainlink/UniV3
 - Does the token conform to the ERC20 standard?:  True / also non-ERC20 token
-- Are there any novel or unique curve logic or mathematical models?: 
+- Are there any novel or unique curve logic or mathematical models?: twAML inherited contracts uses a math model that can be found on the page 5 of the paper https://www.tapioca.xyz/docs/twAML.pdf
 - Does it use a timelock function?:  True
 - Is it an NFT?: 
 - Does it have an AMM?:   

@@ -40,101 +40,117 @@ The other repos are here to support the ecosystem as well as to create a synergy
 
 ![tapioca-userflow](./tapioca-userflow.jpg)
 
-# Scope
 
-## tapioca-bar
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [./contracts/Penrose.sol](./contracts/Penrose.sol) | 377 | Owner contract for USDO & BB | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity)|
-| [./contracts/markets/MarketERC20.sol](./contracts/markets/MarketERC20.sol) | 181 | Base contract for [Market.sol](./contracts/markets/Market.sol) | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/markets/Market.sol](./contracts/markets/Market.sol) | 316 | Base contract for BigBang & Singularity | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity) |
-| [./contracts/markets/singularity/SGLLiquidation.sol](./contracts/markets/singularity/SGLLiquidation.sol) | 288 | Singularity module for liquidations | |
-| [./contracts/markets/singularity/SGLCommon.sol](./contracts/markets/singularity/SGLCommon.sol) | 209 | Singularity base contract | |
-| [./contracts/markets/singularity/SGLLeverage.sol](./contracts/markets/singularity/SGLLeverage.sol) | 135 | Singularity module for leverage | |
-| [./contracts/markets/singularity/SGLStorage.sol](./contracts/markets/singularity/SGLStorage.sol) | 121 | Singularity storage layout | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity) |
-| [./contracts/markets/singularity/SGLLendingCommon.sol](./contracts/markets/singularity/SGLLendingCommon.sol) | 78 | Singularity base contract | |
-| [./contracts/markets/singularity/SGLBorrow.sol](./contracts/markets/singularity/SGLBorrow.sol) | 31 | Singularity borrowing module  | |
-| [./contracts/markets/singularity/SGLCollateral.sol](./contracts/markets/singularity/SGLCollateral.sol) | 22 | Singularity collateral module  | |
-| [./contracts/markets/singularity/Singularity.sol](./contracts/markets/singularity/Singularity.sol) | 452 | Lending & borrowing | |
-| [./contracts/usd0/BaseUSDOStorage.sol](./contracts/usd0/BaseUSDOStorage.sol) | 56 | Base USDO contract | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/usd0/modules/USDOLeverageModule.sol](./contracts/usd0/modules/USDOLeverageModule.sol) | 277 | USDO Module for leverage | |
-| [./contracts/usd0/modules/USDOOptionsModule.sol](./contracts/usd0/modules/USDOOptionsModule.sol) | 269 | USDO Module for [TapiocaBrokerOption.sol](./tap-token-audit/contracts/options/TapiocaOptionBroker.sol) calls | |
-| [./contracts/usd0/modules/USDOMarketModule.sol](./contracts/usd0/modules/USDOMarketModule.sol) | 268 | USDO Module for Singularity | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity) |
-| [./contracts/usd0/BaseUSDO.sol](./contracts/usd0/BaseUSDO.sol) | 358 | Custom LayerZero OFT logic, inherited in USDO | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/usd0/USDO.sol](./contracts/usd0/USDO.sol) | 69 | USDO stablecoin |  |
-| [./contracts/markets/bigBang/BigBang.sol](./contracts/markets/bigBang/BigBang.sol) | 555 | Mint and burn USDO through CDP | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity) |
+# Notes
+- The docs provide a lot of information about the protocol and the user flow, given the size of the protocol, we encourage checking it at https://docs.tapioca.xyz/tapioca/.
+- `MagnetarV2` does not have access control by design. The underlying is the one that implement those (Can be found on `TOFT`, `Singularity`, `USDO`, `TapiocaOptionBroker`).
+- Re-entrency on ownable contract should be considered as a vulnerability only if the last call leads to an external call with potential vulnerability.
 
 
-## tapiocaz
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [./contracts/tOFT/BaseTOFTStorage.sol](./contracts/tOFT/BaseTOFTStorage.sol) | 55 | Base TOFT EVM storage layout | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/tOFT/BaseTOFT.sol](./contracts/tOFT/BaseTOFT.sol) | 455 | Base TOFT contract | |
-| [./contracts/tOFT/modules/BaseTOFTLeverageModule.sol](./contracts/tOFT/modules/BaseTOFTLeverageModule.sol) | 305 | Base TOFT leverage module | |
-| [./contracts/tOFT/modules/BaseTOFTMarketModule.sol](./contracts/tOFT/modules/BaseTOFTMarketModule.sol) | 285 | Base TOFT Singularity market module | |
-| [./contracts/tOFT/modules/BaseTOFTOptionsModule.sol](./contracts/tOFT/modules/BaseTOFTOptionsModule.sol) | 283 | Base TOFT TapiocaOptionBroker market module | |
-| [./contracts/tOFT/modules/BaseTOFTStrategyModule.sol](./contracts/tOFT/modules/BaseTOFTStrategyModule.sol) | 203 | Base TOFT YieldBox module | |
-| [./contracts/TapiocaWrapper.sol](./contracts/TapiocaWrapper.sol) | 141 | TOFT create2 deployer | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/Balancer.sol](./contracts/Balancer.sol) | 223 | Contract that balance out a mTapiocaOFT supply | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts), [@rari-capital/solmate](https://github.com/transmissions11/solmate)  |
-| [./contracts/tOFT/mTapiocaOFT.sol](./contracts/tOFT/mTapiocaOFT.sol) | 94 | Special TOFT implementation that can balance its supply | |
-| [./contracts/tOFT/TapiocaOFT.sol](./contracts/tOFT/TapiocaOFT.sol) | 55 | OFTv2 compliant wrapped token, with new custom functions | |
+# Files in scope
+|File|[SLOC](#nowhere "(nSLOC, SLOC, Lines)")|Description|Libraries|
+|:-|:-:|:-|:-|
+|_Contracts (17)_|
+|[tapioca-bar-audit/contracts/markets/singularity/SGLCollateral.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLCollateral.sol)|[22](#nowhere "(nSLOC:12, SLOC:22, Lines:42)")|Singularity collateral module||
+|[tapioca-bar-audit/contracts/markets/singularity/SGLBorrow.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLBorrow.sol)|[31](#nowhere "(nSLOC:22, SLOC:31, Lines:57)")|Singularity borrowing module||
+|[tapioca-bar-audit/contracts/usd0/BaseUSDOStorage.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/usd0/BaseUSDOStorage.sol) [🖥](#nowhere "Uses Assembly") [💰](#nowhere "Payable Functions") [🧮](#nowhere "Uses Hash-Functions")|[56](#nowhere "(nSLOC:54, SLOC:56, Lines:99)")|Base USDO contract| `tapioca-sdk/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/usd0/USDO.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/usd0/USDO.sol)|[69](#nowhere "(nSLOC:61, SLOC:69, Lines:123)")|USDO stablecoin| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/markets/singularity/SGLLendingCommon.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLLendingCommon.sol) [📤](#nowhere "Initiates ETH Value Transfer")|[78](#nowhere "(nSLOC:59, SLOC:78, Lines:99)")|Singularity base contract||
+|[tapioca-bar-audit/contracts/markets/singularity/SGLStorage.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLStorage.sol)|[121](#nowhere "(nSLOC:121, SLOC:121, Lines:201)")|Singularity storage layout| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`tapioca-periph/*`](./tapioca-periph-audit/) `tapioca-sdk/*`|
+|[tapioca-bar-audit/contracts/markets/singularity/SGLLeverage.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLLeverage.sol) [💰](#nowhere "Payable Functions") [📤](#nowhere "Initiates ETH Value Transfer")|[135](#nowhere "(nSLOC:109, SLOC:135, Lines:187)")|Singularity module for leverage| [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/markets/MarketERC20.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/MarketERC20.sol) [🧮](#nowhere "Uses Hash-Functions")|[181](#nowhere "(nSLOC:137, SLOC:181, Lines:299)")|Base contract for Market.sol| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapioca-bar-audit/contracts/markets/singularity/SGLCommon.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLCommon.sol) [📤](#nowhere "Initiates ETH Value Transfer")|[209](#nowhere "(nSLOC:171, SLOC:209, Lines:259)")|Singularity base contract||
+|[tapioca-bar-audit/contracts/usd0/modules/USDOMarketModule.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/usd0/modules/USDOMarketModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[268](#nowhere "(nSLOC:239, SLOC:268, Lines:299)")|USDO Module for Singularity| `tapioca-sdk/*` [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/usd0/modules/USDOOptionsModule.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/usd0/modules/USDOOptionsModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[269](#nowhere "(nSLOC:240, SLOC:269, Lines:300)")|USDO Module for TapiocaBrokerOption.sol calls| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/usd0/modules/USDOLeverageModule.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/usd0/modules/USDOLeverageModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[277](#nowhere "(nSLOC:250, SLOC:277, Lines:310)")|USDO Module for leverage| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/markets/singularity/SGLLiquidation.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/SGLLiquidation.sol) [📤](#nowhere "Initiates ETH Value Transfer")|[288](#nowhere "(nSLOC:248, SLOC:288, Lines:365)")|Singularity module for liquidations||
+|[tapioca-bar-audit/contracts/usd0/BaseUSDO.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/usd0/BaseUSDO.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall")|[358](#nowhere "(nSLOC:295, SLOC:358, Lines:502)")|Custom LayerZero OFT logic, inherited in USDO| `tapioca-sdk/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/Penrose.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/Penrose.sol) [🖥](#nowhere "Uses Assembly") [💰](#nowhere "Payable Functions") [📤](#nowhere "Initiates ETH Value Transfer") [🌀](#nowhere "create/create2") [Σ](#nowhere "Unchecked Blocks")|[377](#nowhere "(nSLOC:316, SLOC:377, Lines:578)")|Owner contract for USDO & BB| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapioca-bar-audit/contracts/markets/singularity/Singularity.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/singularity/Singularity.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall")|[452](#nowhere "(nSLOC:367, SLOC:452, Lines:644)")|Lending & borrowing| [`tapioca-periph/*`](./tapioca-periph-audit/) `tapioca-sdk/*`|
+|[tapioca-bar-audit/contracts/markets/bigBang/BigBang.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/bigBang/BigBang.sol) [📤](#nowhere "Initiates ETH Value Transfer") [👥](#nowhere "DelegateCall")|[555](#nowhere "(nSLOC:451, SLOC:555, Lines:792)")|Mint and burn USDO through CDP| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|_Abstracts (1)_|
+|[tapioca-bar-audit/contracts/markets/Market.sol](https://github.com/Tapioca-DAO/tapioca-bar-audit/tree/master/contracts/markets/Market.sol) [🖥](#nowhere "Uses Assembly")|[316](#nowhere "(nSLOC:267, SLOC:316, Lines:468)")|Base contract for BigBang & Singularity| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|Total (over 18 files):| [4062](#nowhere "(nSLOC:3419, SLOC:4062, Lines:5624)") ||
 
-## tap-token
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [./contracts/Vesting.sol](./contracts/Vesting.sol) | 94 | Vesting contract | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [././contracts/twAML.sol](././contracts/twAML.sol) | 94 | Math library | |
-| [./contracts/governance/twTAP.sol](./contracts/governance/twTAP.sol) | 341 | ONFT721 governance token | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/tokens/BaseTapOFT.sol](./contracts/tokens/BaseTapOFT.sol) | 264 | Base TapOFT contract | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/tokens/TapOFT.sol](./contracts/tokens/TapOFT.sol) | 127 | Tapioca protocol token | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/option-airdrop/aoTAP.sol](./contracts/option-airdrop/aoTAP.sol) | 88 | Forked version of oTAP | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/tokens/LTap.sol](./contracts/tokens/LTap.sol) | 30 | ERC20 aoTAP 1:1 redeemer | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/option-airdrop/AirdropBroker.sol](./contracts/option-airdrop/AirdropBroker.sol) | 338 | Smaller version of TapiocaOptionBroker to mint & exercise LTAP | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/options/oTAP.sol](./contracts/options/oTAP.sol) | 75 | ERC721 Option meta contract | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/options/TapiocaOptionLiquidityProvision.sol](./contracts/options/TapiocaOptionLiquidityProvision.sol) | 248 | Singularity ERC20 receipt token vault| [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/options/TapiocaOptionBroker.sol](./contracts/options/TapiocaOptionBroker.sol) | 398 | Mint & exercise oTAP | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
+|File|[SLOC](#nowhere "(nSLOC, SLOC, Lines)")|Description|Libraries|
+|:-|:-:|:-|:-|
+|_Contracts (10)_|
+|[tapiocaz-audit/contracts/tOFT/TapiocaOFT.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/TapiocaOFT.sol) [💰](#nowhere "Payable Functions")|[50](#nowhere "(nSLOC:43, SLOC:50, Lines:91)")|OFTv2 compliant wrapped token, with new custom functions||
+|[tapiocaz-audit/contracts/tOFT/BaseTOFTStorage.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/BaseTOFTStorage.sol) [🖥](#nowhere "Uses Assembly") [💰](#nowhere "Payable Functions")|[55](#nowhere "(nSLOC:53, SLOC:55, Lines:79)")|Base TOFT EVM storage layout| `tapioca-sdk/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapiocaz-audit/contracts/tOFT/mTapiocaOFT.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/mTapiocaOFT.sol) [💰](#nowhere "Payable Functions")|[94](#nowhere "(nSLOC:84, SLOC:94, Lines:153)")|Special TOFT implementation that can balance its supply||
+|[tapiocaz-audit/contracts/TapiocaWrapper.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/TapiocaWrapper.sol) [💰](#nowhere "Payable Functions") [🧮](#nowhere "Uses Hash-Functions")|[141](#nowhere "(nSLOC:120, SLOC:141, Lines:229)")|TOFT create2 deployer| [`tapioca-periph/*`](./tapioca-periph-audit/) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapiocaz-audit/contracts/tOFT/modules/BaseTOFTStrategyModule.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/modules/BaseTOFTStrategyModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall")|[203](#nowhere "(nSLOC:164, SLOC:203, Lines:249)")|Base TOFT YieldBox module| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapiocaz-audit/contracts/Balancer.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/Balancer.sol) [💰](#nowhere "Payable Functions")|[223](#nowhere "(nSLOC:181, SLOC:223, Lines:343)")|Contract that balance out a mTapiocaOFT supply| [`tapioca-periph/*`](./tapioca-periph-audit/) `solmate/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapiocaz-audit/contracts/tOFT/modules/BaseTOFTMarketModule.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/modules/BaseTOFTMarketModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[276](#nowhere "(nSLOC:247, SLOC:276, Lines:316)")|Base TOFT Singularity market module| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapiocaz-audit/contracts/tOFT/modules/BaseTOFTOptionsModule.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/modules/BaseTOFTOptionsModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[283](#nowhere "(nSLOC:254, SLOC:283, Lines:315)")|Base TOFT TapiocaOptionBroker market module| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapiocaz-audit/contracts/tOFT/modules/BaseTOFTLeverageModule.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/modules/BaseTOFTLeverageModule.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[305](#nowhere "(nSLOC:279, SLOC:305, Lines:340)")|Base TOFT leverage module| `tapioca-sdk/*` [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tapiocaz-audit/contracts/tOFT/BaseTOFT.sol](https://github.com/Tapioca-DAO/tapiocaz-audit/tree/master/contracts/tOFT/BaseTOFT.sol) [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall")|[455](#nowhere "(nSLOC:373, SLOC:455, Lines:574)")|Base TOFT contract||
+|Total (over 10 files):| [2085](#nowhere "(nSLOC:1798, SLOC:2085, Lines:2689)") ||
 
-## tapioca-periph
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [./contracts/Magnetar/modules/MagnetarMarketModule.sol](./contracts/Magnetar/modules/MagnetarMarketModule.sol) | 656 | Magnetar Singularity module | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
-| [./contracts/Magnetar/MagnetarV2.sol](./contracts/Magnetar/MagnetarV2.sol) | 888 | Helper contract that interacts with Singularity, BigBang, TapiocaOptionBroker | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
-| [./contracts/Magnetar/MagnetarV2Storage.sol](./contracts/Magnetar/MagnetarV2Storage.sol) | 284 | Magnetar storage layout| [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity) |
-| [./contracts/Swapper/BaseSwapper.sol](./contracts/Swapper/BaseSwapper.sol) | 151 | Base swapper contract for other swapper contract|  [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/Swapper/UniswapV3Swapper.sol](./contracts/Swapper/UniswapV3Swapper.sol) | 142 | UniV3 swapper contract|  [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts), [@uniswap/v3-core/](https://github.com/Uniswap/v3-core) [@uniswap/v3-periphery/](https://github.com/Uniswap/v3-periphery) |
-| [./contracts/Swapper/UniswapV2Swapper.sol](./contracts/Swapper/UniswapV2Swapper.sol) | 121 | UniV2 swapper contract|  |
-| [./contracts/Swapper/CurveSwapper.sol](./contracts/Swapper/CurveSwapper.sol) | 108 | Curve swapper contract | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/oracle/implementations/ARBTriCryptoOracle.sol](./contracts/oracle/implementations/ARBTriCryptoOracle.sol) | 87 | TriCrypto oracle | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts), [solady/](https://github.com/Vectorized/solady), [@chainlink/](https://github.com/smartcontractkit/chainlink) |
-| [./contracts/Multicall/Multicall3.sol](./contracts/Multicall/Multicall3.sol) | 72 | Multicall contract | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/oracle/Seer.sol](./contracts/oracle/Seer.sol) | 66 | Oracle contract, uses best of ChainLink/UniV3 price feed | |
-| [./contracts/oracle/implementations/SGOracle.sol](./contracts/oracle/implementations/SGOracle.sol) | 57 | Stargate finance oracle |[@chainlink/](https://github.com/smartcontractkit/chainlink) |
-| [./contracts/TapiocaDeployer/TapiocaDeployer.sol](./contracts/TapiocaDeployer/TapiocaDeployer.sol) | 52 | Tapioca contract deployer|  |
-| [./contracts/oracle/implementations/GLPOracle.sol](./contracts/oracle/implementations/GLPOracle.sol) | 38 | GLP Oracle| |
+|File|[SLOC](#nowhere "(nSLOC, SLOC, Lines)")|Description|Libraries|
+|:-|:-:|:-|:-|
+|_Contracts (9)_|
+|[tap-token-audit/contracts/tokens/LTap.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/tokens/LTap.sol) [📤](#nowhere "Initiates ETH Value Transfer")|[30](#nowhere "(nSLOC:30, SLOC:30, Lines:57)")|ERC20 aoTAP 1:1 redeemer| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tap-token-audit/contracts/options/oTAP.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/options/oTAP.sol)|[75](#nowhere "(nSLOC:63, SLOC:75, Lines:130)")|ERC721 Option meta contract| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) `tapioca-sdk/*`|
+|[tap-token-audit/contracts/option-airdrop/aoTAP.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/option-airdrop/aoTAP.sol)|[88](#nowhere "(nSLOC:76, SLOC:88, Lines:143)")|Forked version of oTAP| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) `tapioca-sdk/*`|
+|[tap-token-audit/contracts/Vesting.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/Vesting.sol)|[94](#nowhere "(nSLOC:94, SLOC:94, Lines:174)")|Vesting contract| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity)|
+|[tap-token-audit/contracts/tokens/TapOFT.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/tokens/TapOFT.sol)|[127](#nowhere "(nSLOC:121, SLOC:127, Lines:256)")|Tapioca protocol token| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tap-token-audit/contracts/options/TapiocaOptionLiquidityProvision.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/options/TapiocaOptionLiquidityProvision.sol) [📤](#nowhere "Initiates ETH Value Transfer") [🧮](#nowhere "Uses Hash-Functions") [Σ](#nowhere "Unchecked Blocks")|[248](#nowhere "(nSLOC:213, SLOC:248, Lines:371)")|Singularity ERC20 receipt token vault| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) `tapioca-sdk/*`|
+|[tap-token-audit/contracts/option-airdrop/AirdropBroker.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/option-airdrop/AirdropBroker.sol) [📤](#nowhere "Initiates ETH Value Transfer") [🧮](#nowhere "Uses Hash-Functions") [Σ](#nowhere "Unchecked Blocks")|[338](#nowhere "(nSLOC:289, SLOC:338, Lines:537)")|Smaller version of TapiocaOptionBroker to mint & exercise LTAP| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|[tap-token-audit/contracts/governance/twTAP.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/governance/twTAP.sol) [🖥](#nowhere "Uses Assembly") [📤](#nowhere "Initiates ETH Value Transfer") [Σ](#nowhere "Unchecked Blocks")|[341](#nowhere "(nSLOC:313, SLOC:341, Lines:587)")|ONFT721 governance token| `tapioca-sdk/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tap-token-audit/contracts/options/TapiocaOptionBroker.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/options/TapiocaOptionBroker.sol) [📤](#nowhere "Initiates ETH Value Transfer") [Σ](#nowhere "Unchecked Blocks")|[398](#nowhere "(nSLOC:359, SLOC:398, Lines:578)")|Mint & exercise oTAP| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|_Abstracts (2)_|
+|[tap-token-audit/contracts/twAML.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/twAML.sol) [🖥](#nowhere "Uses Assembly")|[94](#nowhere "(nSLOC:79, SLOC:94, Lines:159)")|Math library||
+|[tap-token-audit/contracts/tokens/BaseTapOFT.sol](https://github.com/Tapioca-DAO/tap-token-audit/tree/master/contracts/tokens/BaseTapOFT.sol) [💰](#nowhere "Payable Functions") [♻️](#nowhere "TryCatch Blocks") [Σ](#nowhere "Unchecked Blocks")|[264](#nowhere "(nSLOC:228, SLOC:264, Lines:355)")|Base TapOFT contract| `tapioca-sdk/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`tapioca-periph/*`](./tapioca-periph-audit/)|
+|Total (over 11 files):| [2097](#nowhere "(nSLOC:1865, SLOC:2097, Lines:3347)") ||
 
+|File|[SLOC](#nowhere "(nSLOC, SLOC, Lines)")|Description|Libraries|
+|:-|:-:|:-|:-|
+|_Contracts (12)_|
+|[tapioca-periph-audit/contracts/oracle/implementations/GLPOracle.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/oracle/implementations/GLPOracle.sol)|[38](#nowhere "(nSLOC:30, SLOC:38, Lines:57)")|GLP Oracle||
+|[tapioca-periph-audit/contracts/TapiocaDeployer/TapiocaDeployer.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/TapiocaDeployer/TapiocaDeployer.sol) [🖥](#nowhere "Uses Assembly") [💰](#nowhere "Payable Functions") [🌀](#nowhere "create/create2")|[52](#nowhere "(nSLOC:40, SLOC:52, Lines:94)")|Tapioca contract deployer||
+|[tapioca-periph-audit/contracts/oracle/implementations/SGOracle.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/oracle/implementations/SGOracle.sol)|[57](#nowhere "(nSLOC:51, SLOC:57, Lines:103)")|Stargate finance oracle| `@chainlink/*`|
+|[tapioca-periph-audit/contracts/oracle/Seer.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/oracle/Seer.sol)|[66](#nowhere "(nSLOC:60, SLOC:66, Lines:97)")|Oracle contract, uses best of ChainLink/UniV3 price feed||
+|[tapioca-periph-audit/contracts/Multicall/Multicall3.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Multicall/Multicall3.sol) [🖥](#nowhere "Uses Assembly") [💰](#nowhere "Payable Functions") [Σ](#nowhere "Unchecked Blocks")|[72](#nowhere "(nSLOC:68, SLOC:72, Lines:104)")|Multicall contract| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapioca-periph-audit/contracts/oracle/implementations/ARBTriCryptoOracle.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/oracle/implementations/ARBTriCryptoOracle.sol)|[87](#nowhere "(nSLOC:77, SLOC:87, Lines:143)")|TriCrypto oracle| `@chainlink/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) `solady/*`|
+|[tapioca-periph-audit/contracts/Swapper/CurveSwapper.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Swapper/CurveSwapper.sol)|[108](#nowhere "(nSLOC:87, SLOC:108, Lines:168)")|Curve swapper contract| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapioca-periph-audit/contracts/Swapper/UniswapV2Swapper.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Swapper/UniswapV2Swapper.sol)|[121](#nowhere "(nSLOC:100, SLOC:121, Lines:172)")|UniV2 swapper contract||
+|[tapioca-periph-audit/contracts/Swapper/UniswapV3Swapper.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Swapper/UniswapV3Swapper.sol)|[142](#nowhere "(nSLOC:126, SLOC:142, Lines:207)")|UniV3 swapper contract| `@uniswap/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapioca-periph-audit/contracts/Magnetar/MagnetarV2Storage.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Magnetar/MagnetarV2Storage.sol) [💰](#nowhere "Payable Functions")|[284](#nowhere "(nSLOC:284, SLOC:284, Lines:341)")|Magnetar storage layout| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-periph-audit/contracts/Magnetar/modules/MagnetarMarketModule.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Magnetar/modules/MagnetarMarketModule.sol) [💰](#nowhere "Payable Functions") [📤](#nowhere "Initiates ETH Value Transfer") [♻️](#nowhere "TryCatch Blocks")|[676](#nowhere "(nSLOC:580, SLOC:676, Lines:799)")|Magnetar Singularity module| `tapioca-sdk/*` [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|[tapioca-periph-audit/contracts/Magnetar/MagnetarV2.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Magnetar/MagnetarV2.sol) [🖥](#nowhere "Uses Assembly") [💰](#nowhere "Payable Functions") [👥](#nowhere "DelegateCall") [Σ](#nowhere "Unchecked Blocks")|[866](#nowhere "(nSLOC:782, SLOC:866, Lines:1088)")|Helper contract that interacts with Singularity, BigBang, TapiocaOptionBroker| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|_Abstracts (1)_|
+|[tapioca-periph-audit/contracts/Swapper/BaseSwapper.sol](https://github.com/Tapioca-DAO/tapioca-periph-audit/tree/master/contracts/Swapper/BaseSwapper.sol)|[151](#nowhere "(nSLOC:110, SLOC:151, Lines:174)")|Base swapper contract for other swapper contract| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) `tapioca-sdk/*`|
+|Total (over 13 files):| [2720](#nowhere "(nSLOC:2395, SLOC:2720, Lines:3547)") ||
 
-## tapioca-yieldbox-strats
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [./contracts/convex/ConvexTricryptoStrategy.sol](./contracts/convex/ConvexTricryptoStrategy.sol) | 289 | TriCrypto strat |[@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
-| [./contracts/glp/GlpStrategy.sol](./contracts/glp/GlpStrategy.sol) | 240 | GLP strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@uniswap/v3-core/](https://github.com/Uniswap/v3-core)|
-| [./contracts/balancer/BalancerStrategy.sol](./contracts/balancer/BalancerStrategy.sol) | 208 | Balancer strat |[@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/stargate/StargateStrategy.sol](./contracts/stargate/StargateStrategy.sol) | 182 | Stargate strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/aave/AaveStrategy.sol](./contracts/aave/AaveStrategy.sol) | 190 | Stargate strat |  [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts) |
-| [./contracts/curve/TricryptoLPStrategy.sol](./contracts/curve/TricryptoLPStrategy.sol) | 176 | TriCrypto LP strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
-| [./contracts/curve/TricryptoNativeStrategy.sol](./contracts/curve/TricryptoNativeStrategy.sol) | 175 | TriCrypto native strat |  [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
-| [./contracts/lido/LidoEthStrategy.sol](./contracts/lido/LidoEthStrategy.sol) | 176 | TriCrypto LP strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
-| [./contracts/compound/CompoundStrategy.sol](./contracts/compound/CompoundStrategy.sol) | 94 | Compound strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
-| [./contracts/yearn/YearnStrategy.sol](./contracts/yearn/YearnStrategy.sol) | 82 | Yearn strat | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)|
+|File|[SLOC](#nowhere "(nSLOC, SLOC, Lines)")|Description|Libraries|
+|:-|:-:|:-|:-|
+|_Contracts (10)_|
+|[tapioca-yieldbox-strategies-audit/contracts/yearn/YearnStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/yearn/YearnStrategy.sol)|[82](#nowhere "(nSLOC:74, SLOC:82, Lines:151)")|Yearn strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/compound/CompoundStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/compound/CompoundStrategy.sol) [💰](#nowhere "Payable Functions")|[94](#nowhere "(nSLOC:86, SLOC:94, Lines:165)")|Compound strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/lido/LidoEthStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/lido/LidoEthStrategy.sol) [💰](#nowhere "Payable Functions")|[100](#nowhere "(nSLOC:92, SLOC:100, Lines:170)")|TriCrypto LP strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/curve/TricryptoNativeStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/curve/TricryptoNativeStrategy.sol)|[175](#nowhere "(nSLOC:167, SLOC:175, Lines:253)")|TriCrypto native strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/curve/TricryptoLPStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/curve/TricryptoLPStrategy.sol)|[176](#nowhere "(nSLOC:168, SLOC:176, Lines:255)")|TriCrypto LP strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/stargate/StargateStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/stargate/StargateStrategy.sol) [💰](#nowhere "Payable Functions")|[182](#nowhere "(nSLOC:174, SLOC:182, Lines:272)")|Stargate strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/aave/AaveStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/aave/AaveStrategy.sol)|[190](#nowhere "(nSLOC:182, SLOC:190, Lines:276)")|Stargate strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/balancer/BalancerStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/balancer/BalancerStrategy.sol) [💰](#nowhere "Payable Functions")|[208](#nowhere "(nSLOC:200, SLOC:208, Lines:302)")|Balancer strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/glp/GlpStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/glp/GlpStrategy.sol) [🧪](#nowhere "Experimental Features") [♻️](#nowhere "TryCatch Blocks")|[240](#nowhere "(nSLOC:232, SLOC:240, Lines:335)")|GLP strat| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `@uniswap/*` `tapioca-sdk/*`|
+|[tapioca-yieldbox-strategies-audit/contracts/convex/ConvexTricryptoStrategy.sol](https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/tree/master/contracts/convex/ConvexTricryptoStrategy.sol) [🧮](#nowhere "Uses Hash-Functions")|[289](#nowhere "(nSLOC:279, SLOC:289, Lines:381)")|TriCrypto strat| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) `tapioca-sdk/*`|
+|Total (over 10 files):| [1736](#nowhere "(nSLOC:1654, SLOC:1736, Lines:2560)") ||
 
-## yieldbox
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [./contracts/YieldBox.sol](./contracts/YieldBox.sol) | 263 | Main Yieldbox contract | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
-| [./contracts/YieldBoxURIBuilder.sol](./contracts/YieldBoxURIBuilder.sol) | 123 | Inherited by YieldBox | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity), [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
-| [./contracts/NativeTokenFactory.sol](./contracts/NativeTokenFactory.sol) | 72 | Creates ERC1155 tokens |  |
-| [./contracts/YieldBoxPermit.sol](./contracts/YieldBoxPermit.sol) | 67 | EIP-2612 for YieldBox | [@openzeppelin/contracts/](https://www.openzeppelin.com/contracts)  |
-| [./contracts/YieldBoxRebase.sol](./contracts/YieldBoxRebase.sol) | 64 | Math lib for internal accounting | [@boringcrypto/boring-solidity/contracts](https://github.com/boringcrypto/BoringSolidity) |
-| [./contracts/BoringMath.sol](./contracts/BoringMath.sol) | 26 | Simple math lib | |
+|File|[SLOC](#nowhere "(nSLOC, SLOC, Lines)")|Description|Libraries|
+|:-|:-:|:-|:-|
+|_Contracts (3)_|
+|[YieldBox/contracts/NativeTokenFactory.sol](https://github.com/Tapioca-DAO/Yieldbox/tree/master/contracts/NativeTokenFactory.sol)|[72](#nowhere "(nSLOC:72, SLOC:72, Lines:146)")|Creates ERC1155 tokens||
+|[YieldBox/contracts/YieldBoxURIBuilder.sol](https://github.com/Tapioca-DAO/Yieldbox/tree/master/contracts/YieldBoxURIBuilder.sol)|[123](#nowhere "(nSLOC:118, SLOC:123, Lines:136)")|Inherited by YieldBox| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts) [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity)|
+|[YieldBox/contracts/YieldBox.sol](https://github.com/Tapioca-DAO/Yieldbox/tree/master/contracts/YieldBox.sol) [🧪](#nowhere "Experimental Features") [💰](#nowhere "Payable Functions")|[263](#nowhere "(nSLOC:226, SLOC:263, Lines:503)")|Main Yieldbox contract| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity) [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|_Abstracts (1)_|
+|[YieldBox/contracts/YieldBoxPermit.sol](https://github.com/Tapioca-DAO/Yieldbox/tree/master/contracts/YieldBoxPermit.sol) [🧮](#nowhere "Uses Hash-Functions")|[67](#nowhere "(nSLOC:43, SLOC:67, Lines:122)")|EIP-2612 for YieldBox| [`@openzeppelin/*`](https://www.openzeppelin.com/contracts)|
+|_Libraries (2)_|
+|[YieldBox/contracts/BoringMath.sol](https://github.com/Tapioca-DAO/Yieldbox/tree/master/contracts/BoringMath.sol)|[26](#nowhere "(nSLOC:21, SLOC:26, Lines:31)")|Simple math lib||
+|[YieldBox/contracts/YieldBoxRebase.sol](https://github.com/Tapioca-DAO/Yieldbox/tree/master/contracts/YieldBoxRebase.sol) [🧪](#nowhere "Experimental Features")|[40](#nowhere "(nSLOC:30, SLOC:40, Lines:62)")|Math lib for internal accounting| [`@boringcrypto/*`](https://github.com/boringcrypto/BoringSolidity)|
+|Total (over 6 files):| [591](#nowhere "(nSLOC:510, SLOC:591, Lines:1000)") ||
+
 
 ## Out of scope
 
@@ -217,8 +233,3 @@ Slither does not currently work on `tapioca-periph-audit` repo. If you find a wo
 
 # Coverage
 Coverage is broken for some repos because we use `IR` compilation. Disabling it might output a stack too deep compilation error.
-
-# Notes
-- The docs provide a lot of information about the protocol and the user flow, given the size of the protocol, we encourage checking it at https://docs.tapioca.xyz/tapioca/.
-- `MagnetarV2` does not have access control by design. The underlying is the one that implement those (Can be found on `TOFT`, `Singularity`, `USDO`, `TapiocaOptionBroker`).
-- Re-entrency on ownable contract should be considered as a vulnerability only if the last call leads to an external call with potential vulnerability.

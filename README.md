@@ -185,6 +185,11 @@ TapiocaZ repo:
 mTapiocaOFT/Balancer contract balancing mechanism.
 ```
 
+# QuickStart
+```
+export ALCHEMY_API_KEY="<your-alchemy-api-key>" && export PRIVATE_KEY="0000000000000000000000000000000000000000000000000000000000000000" && rm -Rf 2023-07-tapioca || true && gc https://github.com/code-423n4/2023-07-tapioca.git -j8 && cd 2023-07-tapioca && git submodule update --init && nvm install 18.0 && cd tapiocaz-audit && git submodule update --init && yarn && npx hardhat compile && cd .. && cd YieldBox && git submodule update --init && yarn && npx hardhat compile && cd .. && cd tapioca-bar-audit && git submodule update --init && yarn && npx hardhat compile && cd .. && cd tapioca-periph-audit && git submodule update --init && yarn && npx hardhat compile && cd .. && cd tapioca-yieldbox-strategies-audit && git submodule update --init && yarn && npx hardhat compile && cd .. && cd tap-token-audit && git submodule update --init && yarn && npx hardhat compile && cd ..  && cd tapiocaz-audit && REPORT_GAS=true npx hardhat test && cd .. && cd YieldBox && REPORT_GAS=true npx hardhat test && cd .. && cd tapioca-bar-audit && REPORT_GAS=true npx hardhat test && cd .. && cd tapioca-periph-audit && REPORT_GAS=true npx hardhat test && cd .. && cd tapioca-yieldbox-strategies-audit && REPORT_GAS=true npx hardhat test && cd .. && cd tap-token-audit && REPORT_GAS=true npx hardhat test && cd ..
+```
+
 # Tests
 
 ## Hardhat tests:

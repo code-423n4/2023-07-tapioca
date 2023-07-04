@@ -207,6 +207,9 @@ Set `enabled` key to `true` in `hardhat.export.ts>config.gasReporter`
   }
 ```
 
+# Slither
+Slither does not currently work on `tapioca-periph-audit` repo. If you find a workaround, please share in the discord.
+
 # Notes
 - The docs provide a lot of information about the protocol and the user flow, given the size of the protocol, we encourage checking it at https://docs.tapioca.xyz/tapioca/.
 - `MagnetarV2` does not have access control by design. The underlying is the one that implement those (Can be found on `TOFT`, `Singularity`, `USDO`, `TapiocaOptionBroker`).

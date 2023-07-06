@@ -22,6 +22,10 @@ Automated findings output for the audit can be found [here](https://gist.github.
 
 *Note for C4 wardens: Anything included in the automated findings output is considered a publicly known issue and is ineligible for awards.*
 
+Prior audits can be viewed [here](https://docs.tapioca.xyz/tapioca/information/audits-and-partners), and the contents of these are also considered known issues and ineligible for awards. It is recommended that wardens read both Certora reports for helpful context. 
+
+In particular, note that the issue described as "First depositor can steal value of some subsequent deposits" in the Certora audit is a known issue.  
+
 
 # Overview
 

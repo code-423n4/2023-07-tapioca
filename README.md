@@ -18,7 +18,7 @@
 
 ## Automated Findings / Publicly Known Issues
 
-Automated findings output for the audit can be found [here](https://gist.github.com/CloudEllie/eafeb9865761200397c00d70febe5f9d).
+Automated findings output for the audit can be found [here](https://gist.github.com/CloudEllie/eafeb9865761200397c00d70febe5f9d). **❗️Important:** click "Raw" to view the entire report, as it is truncated in the default view.
 
 *Note for C4 wardens: Anything included in the automated findings output is considered a publicly known issue and is ineligible for awards.*
 

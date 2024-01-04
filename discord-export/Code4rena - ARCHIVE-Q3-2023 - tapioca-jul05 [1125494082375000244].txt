@@ -1,0 +1,3467 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-Q3-2023 / tapioca-jul05
+==============================================================
+
+[07/05/2023 14:40] kartoonjoy (pinned)
+👋 Hello and welcome to the audit channel for the $390,000 USDC **Tapioca DAO** audit!
+
+📆 Audit opens 07/05/2023 20:00 (20:00 UTC) and runs through 08/04/2023 20:00 (20:00 UTC) (30 days).
+
+Please give a warm welcome to the Tapioca DAO team, particularly @twMatt | ⚪ (overview questions) and @0xRektora | ⚪, @cryptolyndon and @Leoni | ⚪ (technical questions), who will be available for questions either here in the channel or via DM in the EST, AEST, and CET timezone(s).
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+Audit Page: https://code4rena.com/contests/2023-07-tapioca-dao
+
+{Embed}
+https://code4rena.com/contests/2023-07-tapioca-dao
+Code4rena
+Code4rena is a competitive audit platform that finds more high-severity vulnerabilities, more quickly than any other auditing method.
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/c4-og-banner-3E5BC.png
+
+{Reactions}
+🫡 (8) bolt_discord_emoji (5) 
+
+[07/05/2023 14:40] kartoonjoy
+Pinned a message.
+
+
+[07/05/2023 21:02] leoni_kosmog
+Hello everyone! We'll try to reply to your questions as soon as possible. 
+Thanks!
+
+{Reactions}
+🫡 (7) 
+
+[07/06/2023 04:25] twmatt
+Also wanted to say gm everyone! Im usually around a lot and can answer more general questions about Tapioca! Rektora, Leoni, and Barry will be able to answer any technical questions.
+
+Appreciate everyone a lot for your time in helping make Tapioca more secure! :PearlHeart:
+
+{Reactions}
+🙏 (5) 🌅 (3) 🫡 (4) 
+
+[07/06/2023 06:09] 0xhacksmithh
+Is this protocol previously audited
+
+
+[07/06/2023 06:20] twmatt
+Yieldbox was audited by Certora, and we had 0xRiptide do an internal audit on the codebase.
+
+
+[07/06/2023 06:22] 0xhacksmithh
+Any report available of that audit ??
+
+
+[07/06/2023 06:28] twmatt
+Listed here! https://docs.tapioca.xyz/tapioca/information/audits-and-partners
+
+{Embed}
+https://docs.tapioca.xyz/tapioca/information/audits-and-partners
+Audits & Partners
+Security Information & Partners/Integrations
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/https%253A%252F%252F3014726245-files.gitbo-A4172
+
+
+[07/06/2023 06:44] alymurtazamemon
+Any team member available here for answering technical question?
+
+
+[07/06/2023 06:47] leoni_kosmog
+Yes. Me, Rektora and Barry
+
+{Reactions}
+⚡ (2) 
+
+[07/06/2023 06:48] alymurtazamemon
+just sent you a messsage.
+
+
+[07/06/2023 06:49] leoni_kosmog
+I haven't received anything. Cannot send a DM to you either bc of the privacy rules
+
+
+[07/06/2023 07:49] leoni_kosmog (pinned)
+Thanks @alymurtazamemon for debugging & discovering this. On his machine there was a `404` error when running the quickstart command
+`npm ERR! 404 Not Found - GET https://registry.npmjs.org/18.0 - Not found`
+
+It seems that if you remove this part `&& nvm install 18.0 ` from the command, it will work. So if this happens on your side, make sure to try this as well.
+
+
+Btw, when running the tests per repo, make sure to set your .env file. There's a `.env.example` in each repo. Otherwise you might get a 'Must be authenticated' error
+
+
+[07/06/2023 08:40] zzebra83
+updated my env file with relevant keys etc, but still get that "Must be authenticated!" error
+
+
+[07/06/2023 08:46] leoni_kosmog
+It is named to '.env' ?
+
+
+[07/06/2023 08:46] zzebra83
+yep
+
+
+[07/06/2023 08:56] zzebra83
+fyi, im on tapioca_bar repo
+
+
+[07/06/2023 09:24] leoni_kosmog
+Let me check
+
+
+[07/06/2023 09:28] leoni_kosmog
+I've set a .only for this test
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-7C9D8.png
+
+
+[07/06/2023 09:28] leoni_kosmog
+I have the .env file and the proper keys and it works
+
+
+[07/06/2023 09:28] leoni_kosmog
+so it might be key issue
+
+
+[07/06/2023 09:29] leoni_kosmog
+I ran it using `yarn test`
+
+
+[07/06/2023 09:34] iamdev
+Trying to run Hardhat test: ``` /!\ SDK: Currently in Hardhat local network /!\ 
+ Tx related to the SDK might get stuck if the local network does not automine ```
+
+
+[07/06/2023 09:35] iamdev
+what does this mean?
+
+
+[07/06/2023 09:35] kartoonjoy
+Pinned a message.
+
+
+[07/06/2023 10:07] leoni_kosmog
+It's a warning we added when we extend the hardhat config here
+
+```
+extendEnvironment((hre) => {
+    // copy reference of config.tracer to tracer
+    hre.SDK = SDK;
+    if (hre.network.name === 'hardhat') {
+        console.error(
+            '\x1b[31m',
+            '/!\\ SDK: Currently in Hardhat local network /!\\',
+            '\n Tx related to the SDK might get stuck if the local network does not automine',
+            '\x1b[0m',
+        );
+    }
+});
+```
+
+
+[07/06/2023 10:08] leoni_kosmog
+and the SDK is mostly for dependencies & deployment, so it has some deployment txs
+However, nothing to worry about
+
+
+[07/06/2023 10:48] iamdev
+DM please
+
+
+[07/06/2023 11:03] leoni_kosmog
+Ok
+
+
+[07/06/2023 11:03] zzebra83
+yep works now , thanks
+
+{Reactions}
+🎉 
+
+[07/06/2023 11:05] leoni_kosmog
+Perfect
+
+
+[07/06/2023 11:07] iamdev
+I'm not able to find tapioca-periph.. tap-token-audit/node_modules/tapioca-periph/contracts/interfaces/IOracle.sol": No such file or directory (os error 2).
+
+
+[07/06/2023 11:13] iamdev
+solved.. I had the wrong remapping in foundry
+
+{Reactions}
+pray 
+
+[07/06/2023 11:25] m_rassska
+do you guys have this userflow available?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/Screenshot_2023-07-06_at_14.24.54-C7711.png
+
+
+[07/06/2023 11:26] twmatt
+Not sure if Rektora was including this community made user flow graphic:
+
+{Reactions}
+🔥 
+
+[07/06/2023 11:26] twmatt (pinned)
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/IMG_0497-14CC9.jpg
+
+{Reactions}
+🔥 (4) 
+
+[07/06/2023 12:08] cergyk
+Goated diagram @twMatt | ⚪ ! What does `if oTap ITM` (near the $TAP circle) means?
+
+
+[07/06/2023 12:10] twmatt
+Thanks! Basically if when we distribute oTAP call options each epoch (week), that the options are in the money (above their strike price), then that oTAP will be exercised by lenders with escrowed positions, and the DAO creates POL
+
+
+[07/06/2023 12:11] twmatt
+At the time of distribution they’d all be ITM ofc, but possibility lies for TAP to fall and go OTM, and/or expire
+
+
+[07/06/2023 12:12] twmatt
+That’s also how it creates a soft price floor from the weekly emissions having a direct floor = to the deepest ITM strikes
+
+
+[07/06/2023 12:16] cergyk
+Thanks a lot, got it!
+
+
+[07/06/2023 12:45] cergyk
+`tapioca-periph-audit/contracts/oracle/OracleMulti.sol` should be in scope right?
+
+
+[07/06/2023 12:46] CoOLLaItAr#5816
+check dm @twMatt | ⚪
+
+
+[07/06/2023 13:13] twmatt
+Rektora will be able to comment on that if it’s not!
+
+
+[07/06/2023 14:47] 0xsurena
+Leoni, send you request for DM 🙂
+
+
+[07/06/2023 14:47] 0xrektora
+Hey @cergyk . In terms of Oracles, only `Seer.sol`, `ARBTriCryptoOracle.sol`, `GLPOracle.sol` and `SGOracle.sol` are a part of it. The rest is a code from Angle, which is already audited here https://github.com/AngleProtocol/angle-core/tree/main/contracts/oracle
+
+
+[07/06/2023 14:57] cergyk
+@0xRektora | ⚪ Okey gotcha
+
+{Reactions}
+salute 
+
+[07/06/2023 16:12] twmatt
+Damn, how’d I forget that lol. In Rektora I Trust haha
+
+{Reactions}
+😆 
+
+[07/06/2023 16:43] leoni_kosmog
+I did not receive it @0xSurena
+
+
+[07/06/2023 16:43] cloudellie (pinned)
+**Wardens** - please note that the automated findings output (AKA the winning bot race report 🏆, submitted by @IllIllI is posted below.
+
+These are considered publicly known issues and are not eligible for awards.
+
+🤖 **Automated findings:** 
+https://gist.github.com/CloudEllie/eafeb9865761200397c00d70febe5f9d 
+❗Important: click "Raw" to view the entire report, as it is truncated in the default view.
+
+📄 **Code4rena submission guidelines and automated findings policy:** 
+https://docs.code4rena.com/roles/wardens/submission-policy#automated-findings-ineligible
+
+The above link will also be added to the contest README shortly.
+
+
+[07/06/2023 16:44] cloudellie
+Pinned a message.
+
+
+[07/06/2023 16:56] 0xsurena
+friend request is send 🙏
+
+
+[07/06/2023 17:32] kartoonjoy
+Pinned a message.
+
+
+[07/06/2023 17:41] _brolee
+added @twMatt | ⚪ & @Leoni | ⚪
+
+
+[07/07/2023 00:23] cryptor9119
+@0xRektora | ⚪  @cryptolyndon  and @Leoni | ⚪  please accept fr
+
+
+[07/07/2023 00:40] 0xrektora
+Done 👍
+
+
+[07/07/2023 03:48] __melonwater
+These two commits are diffrent. Does it matter?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/2023-07-07_113702-72A06.png
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/2023-07-07_113640-EAB34.png
+
+
+[07/07/2023 04:50] CoOLLaItAr#5816
+@twMatt | ⚪ check dm ser:)
+
+
+[07/07/2023 05:19] CoOLLaItAr#5816
+can anybody explain the AMM support part in USDO from docs
+
+
+[07/07/2023 06:26] twmatt
+That’s just going over the modeling for how the LP will work for USDO, what AMM USDO will primarily be deployed on, etc.
+
+{Reactions}
+🙌 
+
+[07/07/2023 06:26] twmatt
+POL captured from option redemptions > Arrakis Vaults > LP on UniV3
+
+
+[07/07/2023 06:27] twmatt
+Don’t think there’s anything in scope there for the audit besides oTAP itself and the DSO system (optionbroker, etc)
+
+
+[07/07/2023 06:56] leoni_kosmog
+@xuwinnie No, it’s ok. Those are sub modules. You can always update them by doing a  git sub module update
+
+{Reactions}
+🙂 
+
+[07/07/2023 14:14] 0xrektora
+The one in the C4 repo (023751a) has some fixes for Slither and for some Linux distros
+
+{Reactions}
+🙂 
+
+[07/08/2023 14:30] jovi6132
+Gm frens 🙂
+Just to confirm, LiquidationQueue at tapioca-periph is out of scope, right?
+
+
+[07/08/2023 15:26] leoni_kosmog
+Hi
+
+
+[07/08/2023 15:26] leoni_kosmog
+Yes
+
+
+[07/08/2023 15:50] jovi6132
+Thanks 🙂
+
+
+[07/08/2023 22:37] mahdi9606
+Hi
+
+
+[07/08/2023 22:38] mahdi9606
+Where is Rebase defined , I can't find its definition in repo
+
+
+[07/08/2023 23:13] cryptor9119
+I have the same question
+
+
+[07/09/2023 03:01] barry_lyndon
+It's in a dependency; `@boringcrypto/boring-solidity/contracts/libraries/BoringRebase.sol`;
+
+{Reactions}
+👍 
+
+[07/09/2023 13:21] mahdi9606
+@cryptolyndon  please check dm
+
+
+[07/09/2023 14:25] 0xubermensch
+https://github.com/boringcrypto/BoringSolidity/blob/master/contracts/libraries/BoringRebase.sol
+
+{Embed}
+https://github.com/boringcrypto/BoringSolidity/blob/master/contracts/libraries/BoringRebase.sol
+BoringSolidity/contracts/libraries/BoringRebase.sol at master · bor...
+Basic Solidity Contracts and Libraries to make life easier - BoringSolidity/contracts/libraries/BoringRebase.sol at master · boringcrypto/BoringSolidity
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/BoringSolidity-12998
+
+{Reactions}
+👍 
+
+[07/10/2023 09:32] mahdi9606
+@0xRektora | ⚪ @Leoni | ⚪ please accept friend request
+
+{Reactions}
+👍 
+
+[07/10/2023 10:09] mahdi9606
+What's difference between addAsset and add Collateral in Singularity?
+
+
+[07/10/2023 11:11] 0xsurena
+addAsset is asset that user get borrow from contract, addCollateral is asset that user supply to contract as collateral. you need collateral to borrow asset.
+
+{Reactions}
+👍 
+
+[07/10/2023 14:33] cergyk
+@0xRektora | ⚪ @Leoni | ⚪  Lendable assets are all tOFTs right?
+
+
+[07/10/2023 20:23] 0xrektora
+The lending asset will only be USDO, which is a kind tOFT yes!
+
+{Reactions}
+👍 (4) 
+
+[07/11/2023 06:04] CoOLLaItAr#5816
+@twMatt | ⚪ check dm
+
+
+[07/11/2023 09:09] CoOLLaItAr#5816
+@0xRektora | ⚪  accept request ps
+
+
+[07/11/2023 10:18] trtrth
+is each Singularity is deployed for 1 pair of asset-collateral ?
+
+{Reactions}
+👍 
+
+[07/11/2023 10:33] chaduke3730
+hi, I like to deploy YearnStrategy, but it needs to deploy  a vault first, where is the code for vault?
+
+
+[07/11/2023 10:33] chaduke3730
+https://github.com/Tapioca-DAO/tapioca-yieldbox-strategies-audit/blob/master/contracts/yearn/YearnStrategy.sol
+
+
+[07/11/2023 13:36] c7e7eff
+@twMatt | ⚪ @0xRektora | ⚪  sent friend request
+
+
+[07/11/2023 13:46] 0xrektora
+Accepted 👍
+
+
+[07/11/2023 13:47] 0xrektora
+The vault needs to be a Yearn vault, you'd have to fork mainnet locally and use a Yearn vault address
+
+
+[07/11/2023 13:48] chaduke3730
+ok. thanks
+
+
+[07/11/2023 15:46] dontonka
+a valid issue detected by `slither`  that is not included in knows issue bot race is a valid finding ?
+
+
+[07/11/2023 16:14] milotruck
+Yes
+
+
+[07/11/2023 16:14] milotruck
+It will be treated like any other finding
+
+{Reactions}
+✅ 
+
+[07/11/2023 16:23] 0xrobocop
+Hi sir @0xRektora | ⚪ , sent you a FR
+
+
+[07/11/2023 18:01] 0xrektora
+Accepted :salute:
+
+
+[07/12/2023 10:32] trtrth
+what are trust assumptions on Penrose ?
+
+
+[07/12/2023 14:32] plotchy
+are there docs for the invariants tested for the PreCrime crosschain assertions? I find that really cool. Would like to see the properties
+
+{Reactions}
+🔥 (2) 
+
+[07/12/2023 17:49] 0xrektora
+It's a multisig owned contract
+
+
+[07/12/2023 17:49] 0xrektora
+Currrently we did not setup anything regarding pre-crime yet
+
+
+[07/12/2023 18:27] aba1842
+@0xRektora | ⚪ hey, I sent you a FR, if you have the time pls. As an observation if you don't want to befrend a lot of people, you can let DMs for this server only and we can message request you. It may be simpler for you that way
+
+
+[07/12/2023 18:28] 0xrobocop
+@ABA I think you tagged the wrong account, Im not the sponsor nor have a FR from you.
+
+
+[07/12/2023 18:31] aba1842
+you are right, thanks! just DM you
+
+
+[07/12/2023 18:35] plotchy
+Is there a list of top-level contracts that are designed to hold user funds (native/tokens/nfts)?
+
+
+[07/12/2023 18:46] reentrant
+FR sent @Leoni | ⚪ 🫶
+
+
+[07/13/2023 02:14] 0xrobocop
+Hi, is there some docs about the closingFactor formula in the Market contract?
+
+
+[07/13/2023 06:31] leoni_kosmog
+Accepted
+
+
+[07/13/2023 06:33] leoni_kosmog
+@0xRobocop It's based on the following formula
+
+`x = (borrowPartInUSD - ltvRatio * collateralPartInUSD) / (1 - ltvRatio * (1 + liquidationMultiplierBonus))`
+
+where x represents the closing factor (without any bonuses or whatever)
+
+
+For the following values borrow 8000, collateral 10000
+```
+ltvRatio = 0.75
+collateralPart = 10000
+borrowPart = 8000
+bonus = 0.12
+```
+
+the x is 3125
+
+so borrow part becomes     8000-3125= 4875
+     collateral part becomes  1000- (3125+0.12*3125) = 6500
+4875/6500 = 0.75
+
+
+[07/13/2023 06:33] leoni_kosmog
+Ofc, it's written in a different way in Solidity due to the language resctrictions, but it should have a similar result.
+
+
+[07/13/2023 10:41] m_rassska
+Some high level discussion is here. I enjoyed it a lot!!! 
+https://www.youtube.com/watch?v=yZ7ByxQlHjk
+
+{Embed}
+blocmates
+https://www.youtube.com/watch?v=yZ7ByxQlHjk
+What is TapiocaDAO? Live Stream Interview with The Team.
+Grant and Jedi are joined by Matt and Ben from TapiocaDAO to discuss the upcoming launch of one of our favourite projects that we have come across. If you are a recurring listener here you will know we sing the Tapiocan's praises a lot. Today we let you make your mind up for yourself. 
+
+Join 4,000 others trying to stay ahead in the crypto, DeFi,...
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/maxresdefault-E3C8C.jpg
+
+{Reactions}
+👍 
+
+[07/13/2023 11:18] zzebra83
+if i find bugs in code that is out of scope, whats the deal there? shall i report it or ignore the bug? 🙂
+
+{Reactions}
+👆 
+
+[07/13/2023 12:06] mahdi9606
+Can someone explain me about variables like interestElasticity ,utilization , maximum and minimum TargetUtilization , scale , underFactor, overFactor in _getInterestRate function of SGLCommon ?
+
+
+[07/13/2023 12:06] mahdi9606
+I can't see any comment related to them
+
+
+[07/13/2023 12:07] mahdi9606
+@ubermensch  @0xRektora | ⚪ @cryptolyndon
+
+
+[07/13/2023 15:08] 0xrobocop
+Thanks, yeah this is much cleaner
+
+
+[07/13/2023 16:24] marckn
+Hi 0xRektora, Lenoi and Bari. Accept request plz.
+
+
+[07/13/2023 16:47] elcid2000
+Hi guys, i am getting ``stack to deep`` compilation error, after doing ``npx hardhat compile``. I have enabled compilation viaIR in my .config but it keeps crashing. has anyone experienced this? Thank you!
+
+
+[07/13/2023 17:11] plotchy
+i didnt experience this. just ran the quickstart command and it worked.
+
+{Reactions}
+👍 
+
+[07/13/2023 20:55] berlin.101
+@0xRektora | ⚪, @barrylyndon and @Leoni, please accept my friend request 🙏
+
+
+[07/13/2023 21:09] rokinot
+in `twTAP.sol`, what's a dbz?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-A6119.png
+
+{Reactions}
+👍 
+
+[07/13/2023 21:09] rokinot
+comment is under the `distributeReward()` function
+
+
+[07/13/2023 21:10] rokinot
+couldn't find anything in the docs/code neither
+
+
+[07/14/2023 06:10] leoni_kosmog
+Accepted
+
+
+[07/14/2023 06:10] leoni_kosmog
+@ElCid Ya, you should run the quickstart command and it works
+
+{Reactions}
+🙏 
+
+[07/14/2023 07:00] rvierdiiev
+@Leoni | ⚪ @twMatt | ⚪ sent friend request
+
+{Reactions}
+✅ 
+
+[07/14/2023 10:31] 0xKarl98#0488
+hi i was looking at tapioca thing
+
+
+[07/14/2023 10:32] 0xKarl98#0488
+but might be a dumb question , how can i open that files
+
+
+[07/14/2023 10:32] 0xKarl98#0488
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-573F2.png
+
+
+[07/14/2023 10:58] m_rassska
+what file exactly? 
+There is a scope defined for this audit, prob you should look into that section.
+
+
+[07/14/2023 10:59] 0xKarl98#0488
+i am looking into tapiocaz
+
+
+[07/14/2023 10:59] 0xKarl98#0488
+so you can see i am cd-ing to tapiocaz-audit
+
+
+[07/14/2023 11:00] 0xKarl98#0488
+but turns out to be none in that , what is the cause ?
+
+
+[07/14/2023 11:01] m_rassska
+``git submodule update --init``
+Try to run this
+
+
+[07/14/2023 11:05] 0xKarl98#0488
+yeah that's what i need
+
+
+[07/14/2023 11:05] 0xKarl98#0488
+thanks for the support
+
+
+[07/14/2023 12:07] devblixt_
+hey, noob question: what is base and elastic on rebase?
+
+
+[07/14/2023 12:07] devblixt_
+like what do the terms mean?
+
+
+[07/14/2023 12:24] m_rassska
+not sure, but prob helps a little
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/Screenshot_2023-07-14_at_15.23.47-BE963.png
+
+
+[07/14/2023 12:37] devblixt_
+Okay, so if I supply 2A and borrow 6A, my elastic would be 6A and base would be 4A, right?
+
+
+[07/14/2023 13:26] madalad
+is there anywhere I can find the code for the `sendFrom()` function that is called in `MagnetarMarketModule#_withdrawToChain()` ? I can only find the interface
+
+
+[07/14/2023 13:50] leoni_kosmog
+https://github.com/LayerZero-Labs/solidity-examples/tree/main/contracts @Madalad
+
+{Embed}
+https://github.com/LayerZero-Labs/solidity-examples/tree/main/contracts
+solidity-examples/contracts at main · LayerZero-Labs/solidity-examp...
+example contracts. Contribute to LayerZero-Labs/solidity-examples development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/solidity-examples-C94F0
+
+{Reactions}
+thankyou 
+
+[07/14/2023 15:43] berlin.101
+I see everyone from the project being offline. The EST and CET timezone are waking hours right now. Will project members stay "offline" but are actually available? Just curious whom I could message having questions @twMatt | ⚪  🙏
+
+
+[07/14/2023 17:25] madalad
+sent dm @twMatt | ⚪ 🙂
+
+
+[07/14/2023 17:30] glcanvas
+Hello! What's responsible tap-token-audit repo?
+
+
+[07/14/2023 17:31] glcanvas
+oh, i see
+> Contracts related to the tokenemics, is linked to tapioca-bar in an asymmetric way
+
+
+[07/14/2023 17:51] twmatt
+You can DM me for general questions, or @cryptolyndon @Leoni | ⚪ or @0xRektora | ⚪ for dev related questions
+
+
+[07/14/2023 19:44] leoni_kosmog
+Probably discord shows you as offline if your tab is not active. However you can dm or tag us here ya. I’m available on CET time zone
+
+
+[07/14/2023 21:39] reentrant
+@twMatt | ⚪ @Leoni | ⚪ I'm getting an error while using the quickstart command (w/ alchemy key):
+
+```
+error An unexpected error occurred: "https://registry.yarnpkg.com/@nomiclabs%2fhardhat-vyper: Not found".
+```
+
+
+[07/14/2023 22:11] reentrant
+I went into the package.json for yieldbox strategies and overwrote the slash for hardhat-vyper then reran the quickstart, now it works.  Not sure how that happened 🤷‍♂️
+
+{Reactions}
+✅ (3) 
+
+[07/14/2023 23:03] rokinot
+sent a dm @twMatt | ⚪
+
+
+[07/15/2023 06:52] CoOLLaItAr#5816
+can anybody explain this _lzSend and in which file it is implemented?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-612AD.png
+
+
+[07/15/2023 08:19] CoOLLaItAr#5816
+@Leoni | ⚪ accept FR
+
+{Reactions}
+✅ 
+
+[07/15/2023 08:40] m_rassska
+check out some layerZero docs
+
+
+[07/15/2023 08:41] angry_mustache_man
+@twMatt | ⚪ pls accept fr
+
+
+[07/15/2023 10:18] CoOLLaItAr#5816
+is this implementation of _lzSend() ????
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-6D3C1.png
+
+
+[07/15/2023 10:21] m_rassska
+https://layerzero.gitbook.io/docs/evm-guides/master/how-to-send-a-message
+I'm not against asking question, but please, do some your own research
+
+
+[07/15/2023 10:21] CoOLLaItAr#5816
+ok ser!
+
+
+[07/15/2023 12:58] pxng0lin
+Is it possible to somehow bodge this into a foundry framework then use the HH plugin for foundry ?? Anyone else done it already before I start wrecking my directory lol 😂
+
+
+[07/15/2023 13:39] twmatt
+:salute:
+
+
+[07/15/2023 14:11] m_rassska
+@Leoni | ⚪ , @0xRektora | ⚪ , could you please accept fr? Thanks a lot!
+
+{Reactions}
+👍 (2) 
+
+[07/15/2023 14:47] _brolee
+@twMatt | ⚪ could you please accept fr?
+
+{Reactions}
+salute 
+
+[07/16/2023 07:21] CoOLLaItAr#5816
+@0xRektora | ⚪ chck dm ser:-)
+
+
+[07/16/2023 07:49] bean.eth2
+@0xRektora | ⚪ dm sent too ser
+
+
+[07/16/2023 08:50] angry_mustache_man
+Which strategy is used in "_withdrawFungible()" in "Yieldbox.sol"while withdrawing USD0 ?
+
+
+[07/16/2023 14:32] 0xrektora
+For USDO, the Strategy to be used is just a vault contract, no external interaction will happen https://github.com/Tapioca-DAO/YieldBox/blob/f5ad271b2dcab8b643b7cf622c2d6a128e109999/contracts/strategies/ERC20WithoutStrategy.sol#L14
+
+
+[07/16/2023 14:46] mogiblack
+@0xRektora | ⚪ sent a friend request please check
+
+
+[07/16/2023 17:56] CoOLLaItAr#5816
+@0xRektora | ⚪ dm ser!
+
+
+[07/17/2023 01:33] 0xstalin
+@0xRektora | ⚪ @twMatt | ⚪ @cryptolyndon @Leoni | ⚪ 
+What does it mean by Network as "omnichain" in the tETH/USDO Singularity market? Will be deployed on all available chains and be interconnected through layer0?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-C28B9.png
+
+
+[07/17/2023 03:04] 0xstalin
+@0xRektora | ⚪ Will Singularity markets allow only YieldBox strategies assets as collaterals?
+
+
+[07/17/2023 03:22] 0xstalin
+From this diagram, I understand that the Borrowers  deposits the underlying asset into the Singularity market (in this case would be Stargate ETH)
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-65A76.png
+
+
+[07/17/2023 03:23] 0xstalin
+But in the `tOFT` documentation says that `tAssets are used as collateral on Tapioca markets`
+so, do borrowers deposit the underlying asset (Stargate ETH/STG),  or the omnichain version (tSGETH) of the underlying asset?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-D8C1A.png
+
+
+[07/17/2023 04:07] omprakas
+https://github.com/Tapioca-DAO/tapioca-bar-audit/blob/2286f80f928f41c8bc189d0657d74ba83286c668/contracts/usd0/USDO.sol#L69 what's the value of FlashMintFeePrecesion ?
+
+{Embed}
+https://github.com/Tapioca-DAO/tapioca-bar-audit/blob/2286f80f928f41c8bc189d0657d74ba83286c668/contracts/usd0/USDO.sol
+tapioca-bar-audit/contracts/usd0/USDO.sol at 2286f80f928f41c8bc189d...
+Contribute to Tapioca-DAO/tapioca-bar-audit development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/tapioca-bar-audit-7B6D6
+
+
+[07/17/2023 05:54] CoOLLaItAr#5816
+`1e6` ,ps check contract BaseUSDOStorage.sol
+
+
+[07/17/2023 06:02] omprakas
+ty
+
+
+[07/17/2023 11:55] CoOLLaItAr#5816
+is anybody available from team ? @0xRektora | ⚪    @twMatt | ⚪ 
+@cryptolyndon  @Leoni | ⚪
+
+
+[07/17/2023 12:45] leoni_kosmog
+I think I replied in private, right?
+
+{Reactions}
+🫡 
+
+[07/17/2023 12:46] leoni_kosmog
+yes, that's omnichain
+
+{Reactions}
+🫡 
+
+[07/17/2023 12:46] leoni_kosmog
+markets are only deployed on the main chain tho, arbitrum
+
+{Reactions}
+✅ 
+
+[07/17/2023 12:47] leoni_kosmog
+Not sure what you mean here. Strategies are not collateral. Various tokens are marked as collateral, each of those tokens can have a strategy for yield generation
+
+{Reactions}
+🫡 
+
+[07/17/2023 12:48] leoni_kosmog
+Borrowers borrow, lenders deposit. If we're talking about Singularity, the lent asset is USDO, which borrowers can get.  That part of the diagrams shows that the borrower deposits collateral and gets the USDO (the borrowed asset)
+
+{Reactions}
+🫡 
+
+[07/17/2023 12:57] CoOLLaItAr#5816
+ps check dm ser
+
+
+[07/17/2023 13:26] twmatt
+Borrowers can deposit either, if they deposit a non-tAsset it'll be wrapped into one however
+
+{Reactions}
+🫡 
+
+[07/17/2023 15:00] 0xstalin
+Thaanks, sorry for my wording, I meant if the borrowers were supposed to deposit the underlying asset of a tAsset as collateral, but with your & twMatt answer now I understand how that works, thanks to both of you :thankyou:
+
+{Reactions}
+👍 
+
+[07/17/2023 17:03] sabit97
+@Leoni | ⚪ gas report details are missing in the automated report. Where can I find it, please?
+
+
+[07/17/2023 17:05] itsmetechjay
+click "Raw" to view the entire report, as it is truncated in the default view.
+
+{Reactions}
+👍 
+
+[07/17/2023 17:10] sabit97
+Ok, thanks.
+
+
+[07/18/2023 02:54] _oceansky
+Hi @Leoni | ⚪ , please accept fr, so i can message you thanks
+
+{Reactions}
+✅ 
+
+[07/18/2023 04:11] bean.eth2
+hi @Leoni | ⚪ ; some clarificaion question so may be just asked here for everyone: why function like `removeAsset` in USDOMarketModule has to be marked as `payable` ? what _lzSend would do with the msg.value passed (any minimum requirement etc?)
+
+
+[07/18/2023 05:29] leoni_kosmog
+You need gas tokens to perform cross chain operations. So the value it’s used in LZ to trigger the other chain
+
+
+[07/18/2023 05:29] leoni_kosmog
+What’s extra is refunded by LZ
+
+
+[07/18/2023 06:11] CoOLLaItAr#5816
+@Leoni | ⚪ dm ser!
+
+{Reactions}
+✅ 
+
+[07/18/2023 07:58] mogiblack
+@twMatt | ⚪  please check dm ser
+
+
+[07/18/2023 12:11] scaraven
+Hi, can someone please explain  `_exchangeRate` and `collateralizationRate`. If I'm correct, `collateralizationRate` describes how much collateral is required to borrow i.e. a `colllateralizationRate` of 1.1 would mean that a user would have to put in $1.1 of collateral for every $1 they borrow while `_exchangeRate` is a direct ratio of how much one collateral token is worth in terms of the borrowing token?
+
+
+[07/18/2023 13:04] leoni_kosmog
+collateralizationRate says thay yes.. if I have 75% collateralization rate and 10k in collateral, I can borrow up to 7500
+
+{Reactions}
+❤️ 
+
+[07/18/2023 13:04] leoni_kosmog
+exchangeRate is the value in usd for 1 token
+
+
+[07/18/2023 13:09] ladboy233
+@Leoni | ⚪ Hi Leoni, Dmed!
+
+{Reactions}
+✅ (2) 
+
+[07/18/2023 13:25] ladboy233
+@0xRektora | ⚪ Dmed!!!
+
+{Reactions}
+👍 
+
+[07/18/2023 13:26] ladboy233
+🙏
+
+
+[07/18/2023 14:18] m_rassska
+glad to have you here 😄
+
+{Reactions}
+❤️ 
+
+[07/18/2023 14:53] 0xrektora
+Accepted 👍
+
+
+[07/18/2023 17:18] CoOLLaItAr#5816
+@Leoni | ⚪ dm ser!
+
+
+[07/18/2023 21:26] ladboy233
+OFT
+
+{Reactions}
+👍 
+
+[07/18/2023 21:26] ladboy233
+this name is too fancy and cause confusion
+
+
+[07/18/2023 21:26] ladboy233
+it just means omnichain fungible token
+
+
+[07/18/2023 21:26] ladboy233
+the full name is much better to intrepert
+
+
+[07/18/2023 23:30] 0xstalin
+@0xRektora | ⚪ Sent you FR sir
+
+
+[07/18/2023 23:32] 0xstalin
+@twMatt | ⚪  sent you a DM sir
+
+{Reactions}
+PearlHeart (2) 
+
+[07/18/2023 23:37] twmatt
+So that’s a LayerZero standard, not really for us to rename. I also wouldn’t agree that “Omnichain Fungible Token” is much more legible for an end user, but nonetheless appreciate your input :PearlSmirk:
+
+
+[07/18/2023 23:46] ladboy233
+Yeah I agree, I thought the OFT is a NFT, anyway
+
+
+[07/18/2023 23:46] ladboy233
+:gummy_wink: 👍
+
+
+[07/19/2023 00:17] twmatt
+ONFT would be an NFT (either 721 or 1155), OFTv1 and OFTv2 are ERC20’s, v2 supports non EVMs, and v1 doesn’t.
+
+
+[07/19/2023 00:17] ladboy233
+oh ok, that's good know
+
+
+[07/19/2023 00:17] ladboy233
+thanks I need to read layerzero doc more carefully then
+
+
+[07/19/2023 00:17] ladboy233
+lol
+
+
+[07/19/2023 00:17] ladboy233
+:10_10:
+
+
+[07/19/2023 00:17] twmatt
+Np! Yeah here’s a good quick article here: https://layerzero.gitbook.io/docs/evm-guides/layerzero-omnichain-contracts/oft
+
+{Embed}
+https://layerzero.gitbook.io/docs/evm-guides/layerzero-omnichain-contracts/oft
+OFT
+Omnichain Fungible Token
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/https%253A%252F%252F1064219394-files.gitbo-D5C9E
+
+
+[07/19/2023 00:18] twmatt
+https://layerzero.gitbook.io/docs/evm-guides/layerzero-omnichain-contracts/onft
+
+{Embed}
+https://layerzero.gitbook.io/docs/evm-guides/layerzero-omnichain-contracts/onft
+ONFT
+Omnichain NonFungible Token
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/https%253A%252F%252F1064219394-files.gitbo-D5C9E
+
+
+[07/19/2023 03:06] CoOLLaItAr#5816
+@twMatt | ⚪ dmed ser!
+
+
+[07/19/2023 10:23] windhustler
+Hi all,
+I'm trying to mint some USD0 through the app on Fantom. It goes through the 4 signatures (Fantom and Arbitrum) but at the end says I don't have enough tokens although I have enough Fantom gas tokens. Do I need anything else besides the native gas token to mint USD0 on a network?
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/Screenshot_2023-07-19_at_12.21.18-834B3.png
+
+
+[07/19/2023 10:25] windhustler
+This is the warning
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/Screenshot_2023-07-19_at_12.25.25-91F66.png
+
+
+[07/19/2023 11:04] windhustler
+@twMatt | ⚪ Do you have the addresses of your verified contracts deployed on any testnets so I can check some execution flows?
+
+
+[07/19/2023 11:08] scaraven
+Hi, can someone explain what `totalBorrow.elastic` and `totalBorrow.base` represent?
+
+
+[07/19/2023 11:08] scaraven
+and why sometimes we multiply `userBorrowPart` by `totalBorrow` and somtimes not?
+
+
+[07/19/2023 11:26] elcid2000
+this might help
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-56D48.png
+
+
+[07/19/2023 12:04] leoni_kosmog
+sometimes the LZ fees on testnet fluctuates by a lot so that might be the case
+
+
+[07/19/2023 12:11] windhustler
+That is strange because this shouldn't be transferring any assets between chains. What I am trying to do is buy USD0 on Fantom and keep it there.
+
+
+[07/19/2023 12:12] windhustler
+@Leoni | ⚪ https://discord.com/channels/810916927919620096/1125494082375000244/1131179798723567677 Can you help with this one maybe?
+
+
+[07/19/2023 12:12] leoni_kosmog
+what do you mean buy USDO ?
+
+
+[07/19/2023 12:13] leoni_kosmog
+If you're on FTM and you want to mint USDO, that performs a cross chain operation to arbitrum to mint it and then sends it back to FTM (so there are 2 cross chain operations there)
+
+
+[07/19/2023 12:13] leoni_kosmog
+markets are available only on Arb goerli
+
+
+[07/19/2023 12:16] windhustler
+By buying I meant mint USDO. Aha thx that is useful info. It's not obvious that it happens from the warning photo above.
+So there are two cross-chain messages here. Let's take this example of minting USD0 on Fantom. What happens if the 2nd message has failed from Arb -> Fantom? Do I have to manually retrieve it?
+
+
+[07/19/2023 12:17] leoni_kosmog
+It should fail everything as it's executed in 1 tx
+
+
+[07/19/2023 12:19] windhustler
+@Leoni | ⚪ Can we continue the discussion in dm's. Please accept my friend request
+
+{Reactions}
+✅ 
+
+[07/19/2023 13:03] chaduke3730
+@Leoni | ⚪I have a question, I am sending a fr request
+
+{Reactions}
+✅ 
+
+[07/19/2023 15:17] mogiblack
+@cryptolyndon Dmed you ser
+
+
+[07/19/2023 19:00] windhustler
+Hey, is it a valid vulnerability in case a function in the contract which is in scope calls an internal function from an inherited contract from `tapioca-sdk/*` and the way this inner function is used causes issues?
+
+
+[07/19/2023 19:05] reentrant
+@0xRektora | ⚪ I get "stack too deep" errors when running slither against the codebase. Could you share the slither config you use?
+
+
+[07/19/2023 19:23] devblixt_
+I think they have mentioned that they're not successful in running slither
+
+
+[07/19/2023 19:29] 0xrektora
+DM me more details
+
+
+[07/19/2023 19:29] 0xrektora
+On which repo?
+
+
+[07/19/2023 19:30] 0xrektora
+We mentioned that it doesn't work for `tapioca-periph-audit` repo
+
+
+[07/19/2023 21:45] reentrant
+Thx @0xRektora | ⚪
+
+
+[07/19/2023 21:46] reentrant
+So hackers, anybody get the “stack too deep” error running slither *but fixed it*?
+
+
+[07/19/2023 22:10] reentrant
+word, so I don't know what the issue was **but** running it on a fresh clone of the repo works
+
+
+[07/19/2023 22:12] reentrant
+**running it on a single file is where it still breaks**
+
+
+[07/19/2023 22:12] reentrant
+THUS possibly the easiest thing to do is read the output v carefully, run with `slither .` in the top dir, after setting up `slither.config.json` for each directory
+
+
+[07/19/2023 22:28] popular
+who will be the owner of the USDO contract? multisig that owns penrose?
+
+
+[07/19/2023 23:53] dontonka
+USDO has no hard cap, correct ?
+
+
+[07/20/2023 02:38] twmatt
+There will be a 4 of 7 multisig that controls the collaterals / collateral markets that it’s minted in. Rektora could comment further
+
+{Reactions}
+👍 
+
+[07/20/2023 02:39] twmatt
+Hard cap as in a total supply cap? Nope. There are debt ceilings on each collateral market though
+
+{Reactions}
+🫡 
+
+[07/20/2023 03:06] 0xstalin
+@0xRektora | ⚪ Sent you a DM 🫡
+
+
+[07/20/2023 05:05] CoOLLaItAr#5816
+@twMatt | ⚪ @Leoni | ⚪ dmed ser!
+
+{Reactions}
+👍 
+
+[07/20/2023 05:17] _oceansky
+hi @twMatt | ⚪ dmed you thanks
+
+
+[07/20/2023 06:51] leoni_kosmog
+@Ocean_Sky if it's something I can answer you can DM me as Matt is on EST timezone
+
+{Reactions}
+10_10 
+
+[07/20/2023 08:09] scaraven
+yep, I read through that. I'm just confused how those two things differ.
+
+
+[07/20/2023 10:32] scaraven
+@Leoni | ⚪ I have sent a fr for questions
+
+{Reactions}
+✅ 
+
+[07/20/2023 10:50] elcid2000
+Me too @Leoni | ⚪ . I could not dm you without first sending a FR
+
+{Reactions}
+✅ 
+
+[07/20/2023 10:58] pxng0lin
+Hi team, in the quick start there is a private key, whos is this, or is this to be changed to my own, and if so, is this for goerli?
+
+`export ALCHEMY_API_KEY="<your-alchemy-api-key>" && export PRIVATE_KEY="ae330c71c0930902aae1bdabdca36457e5b92a095c8ad171fd3ae6519961cc2a"`
+
+
+[07/20/2023 11:15] CoOLLaItAr#5816
+@Leoni | ⚪ on dm ps
+
+
+[07/20/2023 11:34] leoni_kosmog
+you just need to add the alchemy key there
+
+{Reactions}
+👍 
+
+[07/20/2023 11:34] leoni_kosmog
+that prv key is a random address
+
+
+[07/20/2023 16:42] 0xstalin
+@Leoni | ⚪ I also sent you a FR to ask a couple of questions 🙂
+
+
+[07/20/2023 17:53] ladboy233
+YieldBox A "BentoBox v2". Acts as a vault, that allow for yield strategies to be applied on the asset.
+
+
+[07/20/2023 17:54] ladboy233
+How much yield box is changed (or what are the major changes in the yield box code), or it is just purely forked from boring crypto repo and no change is made
+
+
+[07/20/2023 18:16] plotchy
+Are Penrose/Singularity/BigBang meant to be deployed on every chain?
+
+
+[07/20/2023 18:28] 0xstalin
+I believe Tapioca markets are only getting deployed on arbitrum
+
+{Reactions}
+this 
+
+[07/20/2023 18:33] plotchy
+Ok, so is your mental model that swappers/markets are only deployed on arbitrum. All actions apart from wrapping/unwrapping of tOFTs needs to go to arbitrum?
+
+
+[07/20/2023 19:32] twmatt
+We codeveloped Yieldbox with BoringCrypto
+
+
+[07/20/2023 19:33] c0pp3rscr3w3r
+Hi,
+Error: Cannot find module './gitsub_tapioca-sdk/src/api/config'
+Require stack:
+- /home/c0pp3rscr3w3r/tapioca/2023-07-tapioca/tapioca-periph-audit/hardhat.export.ts
+- /home/c0pp3rscr3w3r/tapioca/2023-07-tapioca/tapioca-periph-audit/node_modules/hardhat/internal/core/config/config-loading.js
+- /home/c0pp3rscr3w3r/tapioca/2023-07-tapioca/tapioca-periph-audit/node_modules/hardhat/internal/cli/cli.js
+- /home/c0pp3rscr3w3r/tapioca/2023-07-tapioca/tapioca-periph-audit/node_modules/hardhat/internal/cli/bootstrap.js
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1075:15)
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue [as _resolveFilename] (/home/c0pp3rscr3w3r/tapioca/2023-07-tapioca/tapioca-periph-audit/node_modules/@cspotcode/source-map-support/source-map-support.js:811:30)
+
+I tried to run npx hardhat, but I got this error.  Can you give me pointers on whether I missed something?
+
+
+[07/20/2023 19:33] twmatt
+Our code is the final Yieldbox code, they’re one in the same
+
+
+[07/20/2023 19:33] twmatt
+Only thing that gets deployed on every chain is our proxies and Yieldbox
+
+{Reactions}
+🫡 (2) 
+
+[07/20/2023 19:34] ladboy233
+this is great to know
+
+
+[07/20/2023 19:34] ladboy233
+great context
+
+
+[07/20/2023 19:34] ladboy233
+thanks you
+
+{Reactions}
+PearlHeart (2) 
+
+[07/20/2023 19:35] ladboy233
+basically we treat yield box as new feature and audit
+
+
+[07/20/2023 19:35] ladboy233
+:hi5:
+
+
+[07/20/2023 19:35] twmatt
+Yep now I would check the Certora audit on Yieldbox, there’s known vulnerabilities
+
+
+[07/20/2023 19:35] twmatt
+https://docs.tapioca.xyz/tapioca/information/audits-and-partners
+
+{Embed}
+https://docs.tapioca.xyz/tapioca/information/audits-and-partners
+Audits & Partners
+Security Information & Partners/Integrations
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/https%253A%252F%252F3014726245-files.gitbo-A4172
+
+
+[07/20/2023 19:36] ladboy233
+🫡☝️
+
+
+[07/20/2023 19:36] twmatt
+Leoni or Rektora could comment on the swappers, I believe there’s some logic on cross chain leverage
+
+{Reactions}
+👍 
+
+[07/20/2023 19:37] ladboy233
+❤️‍🔥
+
+
+[07/20/2023 19:46] 0xrektora
+Markets and swappers are solely deployed on Arbitrum as the host chain. All final actions go to Arbitrum, as the market is the final destination of the Tx
+
+{Reactions}
+💯 
+
+[07/20/2023 19:47] 0xrektora
+Did you run the quickstart command first?
+
+{Reactions}
+❤️ 
+
+[07/20/2023 20:02] glcanvas
+Hello! The SGL abbreviation, how it stands for?
+
+
+[07/20/2023 20:08] glcanvas
+@0xRektora | ⚪  Sent you a DM & FR 👀
+
+
+[07/20/2023 20:23] popular
+SGL = singularity, SG = stargate
+
+{Reactions}
+this 
+
+[07/20/2023 23:09] minh___
+Is `BigBang.borrow`  supposed to mint USDO to the user? What I see is that USDO gets minted to BigBang, which then deposits it on behalf of `to` (lets say the user) in the `YieldBox`. So User ends up with yield box tokens, but not USDO (which ends up in `asset.strategy`). What is the intention here?
+
+
+[07/21/2023 00:03] popular
+Bit confused by the use of TVL vs LTV across the codebase - anyone able to give some insight there? e.g.:
+```javascript
+(minTVL, maxTVL) = _computeMaxAndMinLTVInAsset(
+    userCollateralShare[user],
+    _exchangeRate
+);
+```
+
+
+[07/21/2023 00:04] 0xstalin
+If I'm not missing something, the point might be to reduce the number of tx for users to lend USDO on Singularity Markets, since the user/to has already been debited with the minted USDO in the yieldbox, when adding assets /lending in a Singularity market , the SM will transfer the user's shares to the SM itself and debit the lender by increasing his balance in _yieldBoxShares[to][asset]...
+
+And if the user would like to get the USDO tokens instead of lending them in a Singularity market, then it will only need to withdraw the shares from the YieldBox and receive in exchange the USDO in his account
+
+{Reactions}
+👍 
+
+[07/21/2023 05:45] leoni_kosmog
+That's the flow; UI will allow automatic withdraw too; However you can also withdraw manually whenever you want using `yieldBox.withdraw`
+
+{Reactions}
+👍 
+
+[07/21/2023 05:49] leoni_kosmog
+Returns  the following: `min` = maximum allowed to be borrowed based on the collateral's value; `max` = collateral's value
+
+
+[07/21/2023 06:08] popular
+Added 😄
+
+
+[07/21/2023 06:09] leoni_kosmog
+Wdym by added?
+
+
+[07/21/2023 06:34] popular
+As discord friend for dm hah
+
+
+[07/21/2023 06:42] SPYBOY#1167
+what is address of oracle in market.sol ?
+
+
+[07/21/2023 07:40] leoni_kosmog
+it can be any oracle implementing IOracle interface
+
+{Reactions}
+👍 
+
+[07/21/2023 11:37] 0xrizwan
+@Leoni | ⚪ sent you DM.
+
+
+[07/21/2023 12:10] leoni_kosmog
+did not receive it
+
+
+[07/21/2023 16:35] minh___
+need clarification on something too if you are available, sent an FR 🙂
+
+
+[07/21/2023 19:56] p_crypt0
+@Leoni | ⚪ pls accept friend request 🙂
+
+{Reactions}
+✅ 
+
+[07/21/2023 20:27] d4r.k
+@Leoni | ⚪ @twMatt | ⚪ Accept my FR
+
+{Reactions}
+✅ 
+
+[07/21/2023 20:27] twmatt
+Done
+
+{Reactions}
+👍 
+
+[07/21/2023 21:07] cryptor9119
+@twMatt | ⚪ please accept fr
+
+{Reactions}
+salute 
+
+[07/22/2023 03:41] __melonwater
+@twMatt | ⚪ hi pls check dm
+
+{Reactions}
+pray 
+
+[07/22/2023 09:46] debofx
+Try npx hardhat install. If not try things like yarn add at openzeppelin/contracts/ and same for other module install yarn add at rari...
+
+
+[07/22/2023 09:52] debofx
+You need to compile with --via-ir first.
+
+
+[07/22/2023 09:54] debofx
+First compile with the suffix --via-ir
+
+
+[07/22/2023 12:14] CoOLLaItAr#5816
+@twMatt | ⚪ dm ser
+
+
+[07/22/2023 12:30] paulbirnbaum
+Hello Devs, 
+
+I have an issue compiling the code as some of the import files are incorrect. 
+Indeed, they need to be remapped. 
+I try to remap on the tsconfig.json file but the path error remains
+
+Here are some examples: 
+```solidity
+// This doesn't work
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol"; 
+
+//This is working 
+import "tapioca-bar-audit/node_modules/@openzeppelin/contracts/utils/cryptography/EIP712.sol";
+```
+
+
+So with the help of ChatGPT, I change the mapping in the tsconfig.json file, and under compilerOptions, I set this line of code 
+
+``` json
+ "paths": {
+       "@openzeppelin/contracts*": ["tapioca-bar-audit/node_modules/@openzeppelin/contracts*"]
+          }
+```
+
+
+But it still doesn't work. Can somebody help me please?
+
+
+[07/22/2023 16:26] debofx
+Yarn add @openzeppelin/contracts/
+
+
+[07/23/2023 06:28] .realsatoshi
+Hi, could you please share the link to this web3-app.
+What I can see is "is coming". 
+Thanks for your help
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/Screen_Shot_2023-07-23_at_6.28.22_PM-2E97A.png
+
+
+[07/23/2023 06:48] twmatt
+Our website is https://tapioca.xyz
+
+{Embed}
+https://tapioca.xyz/
+TapiocaDAO - The Omnichain Money Market
+TapiocaDAO is the first Omnichain money market, powered by LayerZero. Borrow, Lend, and Leverage Up from 20+ blockchains. Tapioca is home to USDO, the first Omnichain decentralized over collateralized and censorship resistant stablecoin.
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/og-5EF40.png
+
+{Reactions}
+👍 
+
+[07/23/2023 07:08] hex_sadeeq
+@twMatt | ⚪  sent you a friend request
+
+{Reactions}
+pray 
+
+[07/23/2023 08:19] wangxx2026
+@Leoni | ⚪  pls accept friend request
+
+{Reactions}
+✅ 
+
+[07/23/2023 11:33] paulbirnbaum
+Nope doesn't work like that. The package is aready installed, it's the path that is broken. 
+I just can remap all import from all files but takes a long time. I was just wondering if you could remap things elsewhere for all
+
+
+[07/23/2023 21:12] twmatt
+Did you run the QuickStart command?
+
+
+[07/23/2023 21:22] debofx
+Yes, I used yarn add to trigger the node folder. Then used find and replace all in ide with the absolute path prefix for imports
+
+
+[07/24/2023 13:19] cholakovv
+@Leoni | ⚪ can you accept my friend request?
+
+{Reactions}
+✅ 
+
+[07/24/2023 19:53] cholakovv
+@0xRektora | ⚪ can you accept friend request?
+
+
+[07/25/2023 09:14] 0xg03.14
+@Leoni | ⚪ Accept Fr
+
+{Reactions}
+✅ 
+
+[07/25/2023 09:16] 0xg03.14
+@Leoni | ⚪ you're gonna create a pool in uniswap(v2 v3) for the collateral and the asset right..?
+
+
+[07/25/2023 09:35] leoni_kosmog
+yes
+
+
+[07/25/2023 09:38] hack3r_0m
+@Leoni | ⚪ can you accept FR?
+
+{Reactions}
+✅ 
+
+[07/25/2023 09:43] 0xg03.14
+@twMatt | ⚪ accept fr
+
+{Reactions}
+salute 
+
+[07/25/2023 23:17] 0xstalin
+heey @Leoni | ⚪ , can you acept FR?
+
+{Reactions}
+👍 
+
+[07/25/2023 23:40] 0xstalin
+Heey @Leoni | ⚪ @0xRektora | ⚪  @cryptolyndon 
+Is there a way in the Singularity markets to get the healthy factory of the user’s accounts?
+
+
+[07/26/2023 06:22] leoni_kosmog
+I assume you can check total borrowed for that user vs total collateral value
+
+
+[07/26/2023 07:24] 0xstalin
+I was thinking about this, so,  the healthy factor percentage per user could be considered the value of  (totalCollateral / totalBorrowed)?
+
+
+[07/26/2023 08:41] leoni_kosmog
+If you're referring to how UI should compute it, yes; It should get the max LTV for that market and compare it with the current user's LTV.
+For example, if the max LTV for MarketA/USDO is 0.75, and the user has 0.5 borrowed, all this information can be retrieved from the market.
+And then I guess health factor itself can have multiple implementations like: it can be 1 for max ltv and increase when position becomes liquidatable or decrease if when the user borrows less, or it can be the other way around, or it can be represented similar in various ranges like low, medium, high, critical and so on
+
+
+[07/26/2023 08:45] leoni_kosmog
+You can use methods like `computeTVLInfo` to get TVL info for a user for example. It returns the collateral's value in lending asset,  value max for ltv and amount to solvency in case the user has anything borrowed
+
+{Reactions}
+👍 
+
+[07/26/2023 08:45] leoni_kosmog
+Or do a manual computation by getting `userCollateralShare`, then convert it to amount using `yieldBox.toAmount `, get the USD value by using an oracle and `userBorrowPart` for borrowed amount
+
+
+[07/26/2023 16:31] c7e7eff
+Where can I find info on the strategies deployment ?
+
+
+[07/26/2023 17:07] SPYBOY#1167
+@Leoni | ⚪  Accept Fr
+
+
+[07/26/2023 18:36] koolexc
+HI @Leoni | ⚪ 
+Is LayerZero Project Essence Relayer the same as LayerZero Default Relayer?
+
+
+[07/26/2023 19:06] glcanvas
+hello! in `Market.sol`
+function `_computeMaxAndMinLTVInAsset` returns `min` and `max`, but what's purpose of `max` value? Is this just corresponds to amount of borrow tokens I receive if exchange all `collateralAmount`?
+
+
+[07/26/2023 19:27] 0xnevi
+max here is used for determining the  dynamic liquidation incentive, with a decreasing % with a increasing LTV for a CDP position. 
+
+When liquidating a CDP position with a LTV equal or greater than 100%, the minimum liquidation incentive of 1% is awarded to the liquidator
+
+This is to encourage early liquidations Correct me if im interpreting it wrongly @Leoni | ⚪
+
+{Reactions}
+❤️ 
+
+[07/26/2023 20:17] twmatt
+No, Project Essence is a 3rd party relayer to LZ (we’d be running our own relayer infra), and Project Essence will be out of scope, we’re intending to use PE in prod working with LayerZero
+
+{Reactions}
+thankyou 
+
+[07/26/2023 20:17] twmatt
+You’re correct
+
+
+[07/26/2023 20:18] twmatt
+The reward linearly decreases so that liquidators are incentivized to liquidate immediately
+
+
+[07/26/2023 20:18] twmatt
+It’s based off a whitepaper we discovered that was created after Avi Eisenberg’s CRV loan on AAVE V2, we agreed with the premise and implemented it
+
+
+[07/26/2023 20:18] twmatt
+https://drive.google.com/file/d/1-W1MlD2mtEfQr1VIu-6NW1W7pp_z3YRc/view
+
+{Embed}
+https://drive.google.com/file/d/1-W1MlD2mtEfQr1VIu-6NW1W7pp_z3YRc/view
+Toxic_Liquidation_Spirals.pdf
+
+
+[07/26/2023 20:21] bizzyvinci
+What is liquidationQueue and what's the purpose?
+
+
+[07/26/2023 20:39] twmatt
+LiquidationQueue is out of scope, it’s a democratized liquidation platform we built for V2, not something we want to discuss further for the current time.
+
+
+[07/26/2023 20:49] bizzyvinci
+But it included in Singularity and used in SGLLiquidation. Will it always be address(0)?
+
+
+[07/26/2023 20:50] twmatt
+It’s disabled, Rektora or Leoni could comment further
+
+{Reactions}
+👍 
+
+[07/26/2023 20:51] bizzyvinci
+For reference https://github.com/Tapioca-DAO/tapioca-bar-audit/blob/2286f80f928f41c8bc189d0657d74ba83286c668/contracts/markets/singularity/SGLLiquidation.sol#L40-L56
+
+{Embed}
+https://github.com/Tapioca-DAO/tapioca-bar-audit/blob/2286f80f928f41c8bc189d0657d74ba83286c668/contracts/markets/singularity/SGLLiquidation.sol
+tapioca-bar-audit/contracts/markets/singularity/SGLLiquidation.sol ...
+Contribute to Tapioca-DAO/tapioca-bar-audit development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/tapioca-bar-audit-7B6D6
+
+
+[07/27/2023 06:38] leoni_kosmog
+yes; it's not going to be set
+
+
+[07/27/2023 06:41] leoni_kosmog
+```if (address(liquidationQueue) != address(0)) {```
+
+
+[07/27/2023 06:42] leoni_kosmog
+It's going to always use the closed liquidation branch
+
+{Reactions}
+🆗 
+
+[07/27/2023 10:28] bizzyvinci
+Sent you a friend request @Leoni | ⚪
+
+{Reactions}
+✅ 
+
+[07/27/2023 13:30] SPYBOY#1167
+Hey @Leoni | ⚪ please accept my friend request
+
+{Reactions}
+✅ 
+
+[07/27/2023 18:39] glcanvas
+Hello! am I right, that in BigBang borrow token is Usd0 always?
+
+
+[07/27/2023 18:55] bizzyvinci
+Right
+
+{Reactions}
+❤️ 
+
+[07/27/2023 19:44] evokid
+@Leoni | ⚪ FR please
+
+{Reactions}
+👍 
+
+[07/27/2023 20:00] c7e7eff
+@Leoni | ⚪ also sent FR
+
+{Reactions}
+👍 
+
+[07/27/2023 23:42] carrotsmuggler
+@Leoni | ⚪ sent FR
+
+{Reactions}
+✅ 
+
+[07/28/2023 06:49] sh3llh4ck3r
+i am not able to configure tapioca using github in vscode
+
+
+[07/28/2023 06:49] sh3llh4ck3r
+please help me i am beginner and first time auditing in this live project
+
+
+[07/28/2023 06:51] twmatt
+Did you try the QuickStart command?
+
+
+[07/28/2023 06:51] sh3llh4ck3r
+yes
+
+
+[07/28/2023 06:51] sh3llh4ck3r
+some error is showing
+
+
+[07/28/2023 06:51] twmatt
+If you could post the error, someone could help answer
+
+
+[07/28/2023 06:52] sh3llh4ck3r
+sure
+
+
+[07/28/2023 06:53] sh3llh4ck3r
+these error is showing in screenshot
+
+
+[07/28/2023 06:53] sh3llh4ck3r
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-9939D.png
+
+
+[07/28/2023 06:53] sh3llh4ck3r
+should I try in linux ?
+
+
+[07/28/2023 06:57] sh3llh4ck3r
+anyone here to help me ?
+
+
+[07/28/2023 07:39] leoni_kosmog
+have you replaced <your alchemy key> with the actual alchemy key?
+
+
+[07/28/2023 08:39] __melonwater
+hi @twMatt | ⚪ pls check dm
+
+
+[07/28/2023 09:34] __melonwater
+@Leoni | ⚪ hi sent you a fr
+
+{Reactions}
+✅ 
+
+[07/28/2023 10:30] sh3llh4ck3r
+yes
+
+
+[07/28/2023 10:41] leoni_kosmog
+are you running the command in powershell or something?
+
+
+[07/28/2023 10:46] sh3llh4ck3r
+i am running in powershelll
+
+
+[07/28/2023 10:46] sh3llh4ck3r
+in vscode
+
+
+[07/28/2023 12:30] minh___
+you need to use a linux environment for that command, use WSL2
+
+{Reactions}
+✅ 
+
+[07/28/2023 12:31] sh3llh4ck3r
+yes... i am working on it
+
+
+[07/28/2023 12:33] minh___
+@Leoni | ⚪ sent you an FR, need clarification on something
+
+{Reactions}
+✅ 
+
+[07/28/2023 12:34] leoni_kosmog
+it should work in bash/cmd
+
+
+[07/28/2023 12:34] leoni_kosmog
+powershell uses ; instead of &&
+
+
+[07/28/2023 12:50] koolexc
+@Leoni | ⚪  Heyy, I have a question, sent you a FR.
+
+
+[07/28/2023 12:50] sh3llh4ck3r
+yes I understand
+
+
+[07/28/2023 13:46] hex_sadeeq
+@Leoni | ⚪ I sent a FR
+
+
+[07/28/2023 14:21] 0xrektora
+Hey everyone, I will be out of reach for the weekend, please reach out to @Leoni | ⚪  or @twMatt | ⚪ during this time
+
+{Reactions}
+👍 (5) 
+
+[07/28/2023 14:30] angry_mustache_man
+@Leoni | ⚪ pls accept my fr
+
+{Reactions}
+✅ 
+
+[07/29/2023 07:10] ak19966
+not sure if somebody already asked this question..
+
+
+[07/29/2023 07:10] ak19966
+what is `base` and what is `elastic` ?
+
+
+[07/29/2023 07:10] ak19966
+@Leoni | ⚪
+
+
+[07/29/2023 07:36] glcanvas
+base -- total borrow amount, elastic -- total borrow amount with interest
+
+{Reactions}
+👍 (3) 
+
+[07/29/2023 11:53] koolexc
+@Leoni | ⚪ could you please accept my FR?
+
+{Reactions}
+✅ (2) 
+
+[07/29/2023 12:54] peakbolt
+hey @Leoni | ⚪ please accept FR
+
+{Reactions}
+✅ (2) 
+
+[07/29/2023 20:34] zinc42
+@Leoni | ⚪   @twMatt | ⚪   could you please accept my FR?
+
+{Reactions}
+pray ✅ (2) 
+
+[07/30/2023 07:00] ak19966
+@Leoni | ⚪ pls accept my FR
+
+{Reactions}
+✅ (2) 
+
+[07/30/2023 18:10] 0xadrii
+@Leoni | ⚪ sent FR
+
+{Reactions}
+✅ (2) letsgo (2) 
+
+[07/31/2023 16:49] paulbirnbaum
+What's the usecase of LTAP. Is it some kind of liquid staking ?
+
+
+[07/31/2023 17:20] twmatt
+Nope, for the LBP. LBP-TAP. So users can’t front run LP provision on Uni of the actual token
+
+
+[08/01/2023 12:38] koolexc
+@twMatt | ⚪ Heyy , sent a DM for a quick question
+
+
+[08/01/2023 14:16] .mangyvagrant
+@Leoni | ⚪ sent fr
+
+{Reactions}
+✅ 
+
+[08/01/2023 17:24] ybansal2403
+@Leoni | ⚪  the instances of gas finding are not displayed in the automated report?
+so can we assume that all the gas findings which we will found will be considered valid ?
+
+
+[08/01/2023 17:29] 0x11singh99
+@Leoni | ⚪  yes this is the prooblem I have also seen in auto report
+
+
+[08/01/2023 17:49] audinarey
+C4 is down, I can't even load page let alone submit findings
+
+
+[08/01/2023 17:50] 0xubermensch
+Works for me
+
+
+[08/01/2023 18:43] audinarey
+Anything from the mods yet?
+
+
+[08/01/2023 19:14] koolexc
+Anyone available from the team for a question? DMed @twMatt | ⚪  no response yet.  @Leoni | ⚪ seems to be offline.
+
+
+[08/01/2023 19:21] itsmetechjay
+We are not seeing an issue with the site - are you getting an error?
+
+
+[08/01/2023 19:44] audinarey
+It loads forever and never opens.
+
+I am sure it has nothing to do with my router
+
+
+[08/01/2023 19:44] itsmetechjay
+will DM
+
+
+[08/01/2023 19:45] audinarey
+Thanks I'll be expecting your DM
+
+
+[08/01/2023 19:45] itsmetechjay
+sent
+
+
+[08/01/2023 19:59] twmatt
+I just saw your DM, you didn't send me a friend request. Will get to you in a min
+
+
+[08/01/2023 19:59] twmatt
+The C4 site or Tapioca.xyz?
+
+
+[08/01/2023 20:00] koolexc
+Thank you 🙏. I thought wasn't necessary. My bad
+
+
+[08/02/2023 06:43] leoni_kosmog
+I'm here now; usually available in CET timezone
+
+
+[08/02/2023 07:10] limbooo9
+@Leoni | ⚪ friend request
+
+{Reactions}
+✅ 
+
+[08/02/2023 09:12] 0x11singh99
+@twMatt | ⚪   the instances of gas finding are not displayed in the automated report?
+so can we assume that all the gas findings which we will found will be considered valid ?    
+What to do for gas findings ?? finding  all, how do we know what instaces is covered by bot report  ??
+
+
+[08/02/2023 09:16] kartoonjoy
+Gas findings are able to be submitted for this audit as long as they are not represented in the bot report.
+
+
+[08/02/2023 09:19] 0x11singh99
+Gas findings table are displayed with all numbers but no instances code or link  added  ie ..Every gas findings in code is valid and bot report seems to be useless for gas findings, I don't think this is the intended behaviour from bot report. Can you check with sponsors??
+
+{Reactions}
+👍 ➕ 
+
+[08/02/2023 09:34] koolexc
+Check raw report not the display. It's truncated
+
+{Reactions}
+thankyou 👍 
+
+[08/02/2023 13:04] 0x73696d616f
+Hey, have a few questions, couldnt find them answered anywhere
+why is there an mTapiocaOFT and a TapiocOFT?
+who's the owner of the TapiocaWrapper and the different (m)TapiocaOFTs?
+
+
+[08/02/2023 13:17] leoni_kosmog
+mTapiocaOFT is used for tOFTs which can have multiple 'host chains' (so you can unwrap it on multiple chains). One example can be ETH which is a gas token for both mainnet and arbitrum
+
+{Reactions}
+👍 
+
+[08/02/2023 18:49] 0x73696d616f
+@Leoni | ⚪ sent a friend request so we can talk
+
+{Reactions}
+✅ 
+
+[08/02/2023 20:52] thank_you_
+@Leoni | ⚪ sent a friend request to ask a question. thanks!
+
+{Reactions}
+✅ 
+
+[08/04/2023 06:31] leoni_kosmog
+Hey. I’ll be away for a few hours. If I’m not replying to you immediately please wait and I’ll do it or ask the other team members
+
+{Reactions}
+👍 (2) 
+
+[08/04/2023 16:07] acegawd
+Who's available @Leoni | ⚪ @twMatt | ⚪ @0xRektora | ⚪
+
+
+[08/04/2023 19:00] 0xrektora
+You can DM me
+
+{Reactions}
+👀 😂 
+
+[08/04/2023 19:32] acegawd
+Are your DMs even open?
+
+
+[08/04/2023 19:54] 0xrektora
+Send me a friend request
+
+
+[08/04/2023 19:54] acegawd
+Sent
+
+
+[08/04/2023 19:55] 0xrektora
+Accepted 👍
+
+
+[08/04/2023 20:01] hunter_w3b
+:hi5:
+
+
+[08/04/2023 20:02] C4
+**🚨 AUDIT ALERT**
+
+@🐺wardens The **Tapioca DAO** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks. Keep an eye on #📢announcements for regular updates on how the audit is progressing through awarding 🤑🏆, judging 🧑‍⚖️ and reporting 📜. Feel free to ping a Contest-Admin if you have questions along the way!
+
+{Reactions}
+hi5 (9) cheers_badger (4) 
+
+[08/04/2023 20:02] ladboy233
+lol
+
+
+[08/04/2023 20:02] ladboy233
+still 4 -5 report not submit
+
+
+[08/04/2023 20:02] ladboy233
+it is ok
+
+
+[08/04/2023 20:02] ladboy233
+there are crazy amount of finding
+
+
+[08/04/2023 20:02] ladboy233
+....
+
+
+[08/04/2023 20:03] ladboy233
+like the largest volume of finding in c4 history
+
+{Reactions}
+🔥 (5) 
+
+[08/04/2023 20:03] 0xrobocop
+Is that a fact?
+
+
+[08/04/2023 20:04] ladboy233
+it is fact
+
+
+[08/04/2023 20:04] auditsea
+Thank god for judges
+
+
+[08/04/2023 20:04] 0xrobocop
+Wow, how much they were?
+
+
+[08/04/2023 20:04] ladboy233
+like 1300+
+
+
+[08/04/2023 20:05] hunter_w3b
+1600+ 🥲
+
+{Reactions}
+😂 (4) 👀 (2) 
+
+[08/04/2023 20:05] kodyvim
+My last submission was about 1400+ lol
+
+
+[08/04/2023 20:05] ladboy233
+oh wow
+
+
+[08/04/2023 20:05] ladboy233
+lol
+
+
+[08/04/2023 20:06] peakbolt
+how do u tell?
+
+
+[08/04/2023 20:06] peakbolt
+the num of submission
+
+
+[08/04/2023 20:06] angry_mustache_man
+Results will take minimum 2-3 months
+
+
+[08/04/2023 20:07] kodyvim
+From your findings ID on code4rena site.
+
+{Reactions}
+👍🏼 
+
+[08/04/2023 20:07] peakbolt
+ohh.. cant see it after its closed
+
+{Reactions}
+👍 
+
+[08/04/2023 20:07] ladboy233
+yeah minimum 2 - 3 month I guess
+
+
+[08/04/2023 20:08] hunter_w3b
+My last submission was made with just 2 minutes remaining, and the submission ID was 1600+
+
+{Reactions}
+😮 
+
+[08/04/2023 20:08] SPYBOY#1167
+While submitting mine one was around 700
+
+{Reactions}
+👀 (2) 
+
+[08/04/2023 20:09] hunter_w3b
+🐺
+
+{Reactions}
+😅 (2) 
+
+[08/04/2023 20:11] angry_mustache_man
+When did u submit ur last issue
+
+
+[08/04/2023 20:11] SPYBOY#1167
+2 days ago
+
+
+[08/04/2023 20:12] kodyvim
+Truee
+
+
+[08/04/2023 20:12] c145h
+At the last minute, it was 1669 so I assume 1670 ~ 1680
+
+
+[08/04/2023 20:12] SPYBOY#1167
+I think they are too many because of bot race
+
+
+[08/04/2023 20:13] kodyvim
+How?
+
+
+[08/04/2023 20:13] SPYBOY#1167
+This ids are also includ reports of bot race I think so
+
+
+[08/04/2023 20:13] plamkata
+Ok can we dispute findings now that its closed
+
+
+[08/04/2023 20:14] kodyvim
+Until reports are out I guess
+
+
+[08/04/2023 20:14] SPYBOY#1167
+Can we see others findings like sharelock?
+
+
+[08/04/2023 20:19] c145h
+No, you need backstage
+
+{Reactions}
+🙌 
+
+[08/04/2023 20:19] c145h
+Hey, gimme that 4-5 🙂 🙂
+
+
+[08/04/2023 20:19] c145h
+Is it h/m?
+
+
+[08/04/2023 20:19] ladboy233
+of course it is
+
+
+[08/04/2023 20:19] ladboy233
+but it is ok
+
+
+[08/04/2023 20:20] ladboy233
+let us move on
+
+
+[08/04/2023 20:20] ladboy233
+:hi5:
+
+
+[08/04/2023 20:20] c145h
+how many did u submit?
+
+
+[08/04/2023 20:21] ladboy233
+like 30, but there should be 40 if more time are given, did not leave sufficient time to write report I guess
+
+{Reactions}
+🆒 (8) 
+
+[08/04/2023 20:21] ladboy233
+it is ok
+
+{Reactions}
+💪 (8) 
+
+[08/04/2023 20:21] ladboy233
+:gummy_bear:
+
+
+[08/04/2023 20:25] peakbolt
+its ok you just need 30 solos
+
+{Reactions}
+4739_Skeletor chefskiss 👍 
+
+[08/04/2023 20:28] ladboy233
+just give me one or two I am happy, there are must be tooooooonnnnns of duplicatessssssss
+
+
+[08/04/2023 20:28] peakbolt
+haha
+
+
+[08/04/2023 20:28] peakbolt
+be prepared for massive dilution
+
+{Reactions}
+😢 
+
+[08/04/2023 20:34] c145h
+Can we increase payout for judge? I am worried the judge will get bored and throw away findings
+
+{Reactions}
+😂 (4) 
+
+[08/04/2023 20:41] bizzyvinci
+Nice project. 
+It wasn't Boring.
+It was SpecTAPcular 😉
+
+{Reactions}
+PearlHeart (8) 
+
+[08/04/2023 20:42] c145h
+Bot findings are exceptional, it makes me focus on h/m.
+
+
+[08/04/2023 21:13] 0xstalin
+And I was thinking that I killed it this time with my 15 findings 🥲
+
+{Reactions}
+😂 (6) 
+
+[08/04/2023 23:54] chaduke3730
+good luck to all. I was traveling, but managed to submit some. No regret
+
+
+[08/04/2023 23:55] chaduke3730
+🙂
+
+
+[08/05/2023 00:11] 0xstalin
+you still submitted like 30+, your name accurately reflects what you are sir, a chad 🫡
+
+{Reactions}
+😂 (5) 
+
+[08/05/2023 00:13] 0xstalin
+https://tenor.com/view/mujikcboro-seriymujik-gif-24361533
+
+{Embed}
+https://tenor.com/view/mujikcboro-seriymujik-gif-24361533
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/mujikcboro-seriymujik-1B3AD.png
+
+{Reactions}
+😅 
+
+[08/05/2023 00:44] fulum
+This community have very good researchers, omg the numbers of findings, gg:10_10:
+
+
+[08/05/2023 04:20] 0xg03.14
+really enjoyed this one
+
+
+[08/05/2023 05:07] 0xnevi
+2 judge might be needed for this 🤣. Insane volume of submissions
+
+
+[08/05/2023 06:15] twmatt
+Believe there’s 8
+
+{Reactions}
+💪 (5) 
+
+[08/05/2023 06:17] twmatt
+Thanks everyone for participating from everyone at Tapioca Foundation! Very much appreciate all of your collective work in tackling a complex beast like Tapioca and helping to harden our security as much as possible! :PearlHeart:
+
+{Reactions}
+🫡 (15) code4rena (7) praisethesun (5) 
+
+[08/05/2023 08:49] chaduke3730
+Thanks for your encouragement!
+
+{Reactions}
+🫡 (6) 
+
+[08/05/2023 08:49] chaduke3730
+@0xStalin
+
+
+[08/05/2023 18:46] 0xdeo
+How did you see your submission IDs?
+
+
+[08/05/2023 18:58] koolexc
+Wish you all the best man
+
+
+[08/06/2023 01:46] chaduke3730
+@Koolexthanks congrats to your recent great achievements
+
+{Reactions}
+💚 
+
+[08/06/2023 02:17] m_rassska
+first: figure out how to obtain +backstage
+
+
+[08/06/2023 03:54] 0xdeo
+Hahah is that the only way
+
+
+[08/06/2023 03:55] 0xdeo
+I’m grinding to get there, waiting on the judging 🤞
+
+
+[08/23/2023 04:50] shawon2212
+How much longer?
+
+
+[08/23/2023 09:00] 0xnevi
+Long, i estimate maybe anywhere from 3 weeks - 1.5 months
+
+
+[08/23/2023 17:17] rustyrabbit
+And then just 2 days qa!
+
+{Reactions}
+🤣 
+
+[09/01/2023 14:36] hunter_w3b
+https://tenor.com/view/waiting-titanic-gif-25999423
+
+{Embed}
+https://tenor.com/view/waiting-titanic-gif-25999423
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/waiting-titanic-8E949.png
+
+{Reactions}
+😂 (3) 
+
+[09/01/2023 15:08] thebrittfactor
+This was a big one y'all! Sponsor is currently working through their review 🙂 . Once they wrap up, we'll get this over to judging.
+
+{Reactions}
+thankyou (6) 🔥 (4) 
+
+[09/13/2023 08:28] devblixt_
+looks like this one is in judging!
+
+{Reactions}
+👀 
+
+[09/14/2023 12:31] 0xg03.14
+@PaperParachute | C4 any updates...?
+
+
+[09/19/2023 10:09] 0xblackskull
+Any update??
+
+
+[09/19/2023 10:59] t1moh
+Judging is ongoing
+
+{Reactions}
+nice 
+
+[09/21/2023 20:48] ladboy233
+https://tenor.com/view/shawn-spencer-when-psych-james-roday-huh-gif-17407063
+
+{Embed}
+https://tenor.com/view/shawn-spencer-when-psych-james-roday-huh-gif-17407063
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/shawn-spencer-when-90135.png
+
+
+[09/21/2023 20:49] ctf_sec
+https://tenor.com/view/hang-first-time-smiles-gif-14991372
+
+{Embed}
+https://tenor.com/view/hang-first-time-smiles-gif-14991372
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/hang-first-time-67A43.png
+
+{Reactions}
+😆 (14) 
+
+[09/21/2023 21:57] uncle Jeff#4407
+https://tenor.com/view/spider-man-we-one-gif-18212100
+
+{Embed}
+https://tenor.com/view/spider-man-we-one-gif-18212100
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/spider-man-85359.png
+
+{Reactions}
+😂 (9) 
+
+[09/26/2023 08:47] acai_sec
+Any update???
+
+
+[09/26/2023 14:03] ihtishamsudo
+https://www.dailywarden.com
+
+{Embed}
+https://www.dailywarden.com/
+Daily Warden - Active and upcoming contests sent to you daily
+7 Active and Upcoming Contests
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/d9zjlrJR-3ED74.png
+
+
+[10/03/2023 13:35] thebrittfactor (pinned)
+❗️Wardens: Please note that this audit will have an extended post-judging QA period due to the volume of submissions. The QA phase began Monday and is scheduled to span 5 days. Following this, the judge will proceed to finalize their decisions, and awarding could take place next week. We appreciate your patience during this process 🎉 :hi5:
+
+{Reactions}
+🔥 (11) 🫡 (8) hi5 (4) code4rena (5) 
+
+[10/03/2023 13:36] itsmetechjay
+Pinned a message.
+
+
+[10/11/2023 10:13] hunter_w3b
+https://tenor.com/view/digidragonz-digidragon-epsilon-wen-when-gif-23757670
+
+{Embed}
+https://tenor.com/view/digidragonz-digidragon-epsilon-wen-when-gif-23757670
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/digidragonz-digidragon-04FAD.png
+
+{Reactions}
+😁 (6) 
+
+[10/11/2023 10:45] _paperparachute
+Tapioca was such a big boi so it's been taking some time, but I'm relatively confident you'll see results by the end of the week 🙂
+
+{Reactions}
+👍 (6) hi5 (2) 10_10 (2) 🫡 (2) 
+
+[10/11/2023 10:49] wangxx2026
+Some information has been exposed
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-A8D6D.png
+
+
+[10/11/2023 12:57] nethoxa
+yeah, be prepared for 5$ bounty due to dups xD
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/image-AC096.png
+
+
+[10/11/2023 12:58] nethoxa
+https://tenor.com/view/dancing-cat-gif-4282274427255609748
+
+{Embed}
+https://tenor.com/view/dancing-cat-gif-4282274427255609748
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/dancing-cat-FF57C.png
+
+{Reactions}
+😂 (13) 
+
+[10/11/2023 13:36] SPYBOY#1167
+Helped Secure means your findings are valid in this contest or  you have participated in this contests ??
+
+
+[10/11/2023 13:38] devblixt_
+probably that your findings are valid
+
+{Reactions}
+👍 (2) 
+
+[10/11/2023 13:38] devblixt_
+where do we find team findings? are there profiles for teams as well?
+
+
+[10/11/2023 14:13] nethoxa
+valid
+
+{Reactions}
+🙌 (2) 
+
+[10/11/2023 17:14] rokinot
+post QA is finished, results at anytime now
+
+
+[10/11/2023 17:59] wahedtalash77#8433
+https://tenor.com/view/me-waiting-for-my-friends-to-get-online-gif-25825491
+
+{Embed}
+https://tenor.com/view/me-waiting-for-my-friends-to-get-online-gif-25825491
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/me-waiting-for-my-friends-to-get-online-3049B.png
+
+{Reactions}
+😂 
+
+[10/11/2023 18:23] devblixt_
+this was one crazy contest guys! hope it goes well for everyone
+
+{Reactions}
+🫡 
+
+[10/11/2023 18:40] 0xstalin
+https://tenor.com/view/family-guy-stewie-griffin-sad-depressed-crazy-gif-5389633
+
+{Embed}
+https://tenor.com/view/family-guy-stewie-griffin-sad-depressed-crazy-gif-5389633
+bebe agobiado
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/family-guy-stewie-griffin-1E01A.png
+
+
+[10/11/2023 19:44] nethoxa
+https://tenor.com/view/bruh-gif-20733430
+
+{Embed}
+https://tenor.com/view/bruh-gif-20733430
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/bruh-1EE75.png
+
+{Reactions}
+😂 (4) 🤝 
+
+[10/11/2023 19:56] 0xhelium
+Where to see this info ?
+
+
+[10/11/2023 19:57] nethoxa
+Your profile
+
+
+[10/11/2023 19:57] 0xhelium
+On C4 or discord ?
+
+
+[10/11/2023 19:58] nethoxa
+On c4
+
+
+[10/12/2023 07:41] c145h
+Who's the judge? If no updates on profile, can I assume I am doomed?
+
+
+[10/12/2023 07:55] devblixt_
+wait for results. Don't assume, verify
+
+
+[10/12/2023 09:21] glcanvas
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/images-1D5FE.png
+
+
+[10/12/2023 12:31] lsdan
+I’m the judge. No comment… mostly because I don’t remember 😅
+
+{Reactions}
+😂 (3) 🥲 
+
+[10/12/2023 12:51] devblixt_
+hey this is a question i wanted to ask, how good must a PoC be? Let's say for example you discover a high severity vulnerability and the issue is that some functionality which is supposed to be implemented has not been implemented and this results in something, are you still expected to prove it with a code-based PoC or is an explanation enough?
+
+{Reactions}
+❤️ 
+
+[10/12/2023 13:49] block_chomper
+https://tenor.com/view/home-office-busy-bored-in-the-house-depressing-bored-gif-16783448
+
+{Embed}
+https://tenor.com/view/home-office-busy-bored-in-the-house-depressing-bored-gif-16783448
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/home-office-busy-AB61A.png
+
+
+[10/13/2023 02:34] lsdan
+This will vary based on how obvious the issue is, but in general you do need a poc for high or medium issues
+
+
+[10/13/2023 02:34] richardzheng
+When will result be public?
+
+
+[10/13/2023 03:43] uncle Jeff#4407
+the process is manual, there is a chance you're doomed  and there is a chance they haven't gotten to yours yet
+
+
+[10/13/2023 03:43] uncle Jeff#4407
+either way keep grinding 💪
+
+
+[10/13/2023 05:38] devblixt_
+thanks for the clarification!
+
+
+[10/13/2023 06:09] devblixt_
+awarding should be soon, report will take more time
+
+
+[10/13/2023 09:48] bizzyvinci
+https://tenor.com/view/backstreets-boy-backstreets-back-back-yeah-dance-party-gif-16284366
+
+{Embed}
+https://tenor.com/view/backstreets-boy-backstreets-back-back-yeah-dance-party-gif-16284366
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/backstreets-boy-backstreets-back-D68EC.png
+
+
+[10/13/2023 13:30] hunter_w3b
+https://tenor.com/view/im-pretty-sure-its-coming-arun-maini-mrwhosetheboss-its-nearly-coming-im-confident-it-will-come-gif-20135284
+
+{Embed}
+https://tenor.com/view/im-pretty-sure-its-coming-arun-maini-mrwhosetheboss-its-nearly-coming-im-confident-it-will-come-gif-20135284
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/im-pretty-sure-its-coming-arun-maini-69064.png
+
+
+[10/13/2023 13:37] _paperparachute
+https://tenor.com/view/dog-husky-soon-gif-7801078
+
+{Embed}
+https://tenor.com/view/dog-husky-soon-gif-7801078
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/dog-husky-A200D.png
+
+{Reactions}
+👀 (9) 🔥 (2) 🚀 (2) 596058680408145921 (2) 
+
+[10/13/2023 14:52] ladboy233
+paperparachute is typing
+
+
+[10/13/2023 14:52] nethoxa
+https://tenor.com/view/wow-gif-16561343638457120731
+
+{Embed}
+https://tenor.com/view/wow-gif-16561343638457120731
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/wow-80B57.png
+
+
+[10/13/2023 14:52] _paperparachute
+Well maybe I'm just toying with you.
+
+{Reactions}
+😂 (7) 
+
+[10/13/2023 14:53] ladboy233
+:4739_Skeletor:
+
+
+[10/13/2023 14:54] devblixt_
+are the tapioca results in the room with us
+
+
+[10/13/2023 14:55] devblixt_
+btw crazy work on delegate @0xladboy | Sparkware
+
+
+[10/13/2023 14:55] ladboy233
+soon the sentiment goes to the winner of this contest
+
+{Reactions}
+😅 (3) 
+
+[10/13/2023 14:56] ladboy233
+which is not me, but yeah aside from reward, the report of this contest is a good learning source for studying external integration
+
+
+[10/13/2023 14:56] devblixt_
+very much! such a crazy project
+
+
+[10/13/2023 15:04] nethoxa
+https://tenor.com/view/cat-laptop-fast-homework-apple-gif-5315897
+
+{Embed}
+https://tenor.com/view/cat-laptop-fast-homework-apple-gif-5315897
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/cat-laptop-CA96C.png
+
+{Reactions}
+😢 (2) 
+
+[10/13/2023 15:05] nethoxa
+@PaperParachute | C4 do you feel observed? xD
+
+{Reactions}
+😰 (3) 
+
+[10/13/2023 15:05] devblixt_
+paperparachute I'm waiting for my $5 award please send the message 🙏
+
+
+[10/13/2023 15:05] nethoxa
+nope, 0$ with 4 highs, dups
+
+{Reactions}
+😂 (2) 
+
+[10/13/2023 15:06] ladboy233
+https://tenor.com/view/nariukiyo-dj-khaled-stop-wait-chill-gif-23353785
+
+{Embed}
+https://tenor.com/view/nariukiyo-dj-khaled-stop-wait-chill-gif-23353785
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/nariukiyo-dj-khaled-B0C7F.png
+
+
+[10/13/2023 15:12] nethoxa
+https://tenor.com/view/waiting-gif-21631787
+
+{Embed}
+https://tenor.com/view/waiting-gif-21631787
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/waiting-837D1.png
+
+
+[10/13/2023 15:12] nethoxa
+I had to do it
+
+
+[10/13/2023 15:12] nethoxa
+I'm sorry
+
+
+[10/13/2023 15:13] _paperparachute
+🤑 🎉  Awards for **Tapioca**:
+
+$21,082.76 USDC » @Alex The Entreprenerd 
+$17,734.07 USDC » @peakbolt 
+$16,166.83 USDC » @windhustler 
+$16,089.54 USDC » KIntern_NA (@duc , @TrungOre)
+$15,494.89 USDC » @carrotsmuggler 
+$14,643.94 USDC » @0x73696d616f 
+$11,287.85 USDC » @zzzitron 
+$8,731.69 USDC » @cergyk 
+$7,739.70 USDC » @Kaden  
+$7,298.84 USDC » @rvierdiiev 
+$6,783.08 USDC » @Ack (@popular00, @igorline, @plotchy) 
+$6,386.18 USDC » @ItsNio 
+$5,019.07 USDC » @Vagner 
+$4,905.86 USDC » @dirk_y 
+$4,564.39 USDC » @xuwinnie 
+$4,460.09 USDC » @Koolex 
+$4,428.18 USDC » @0xStalin 
+$3,607.34 USDC » @bin2chen 
+$3,606.65 USDC » @0xladboy | Sparkware 
+$3,585.65 USDC » SaeedAlipoor01988
+$3,261.06 USDC » @mojito_auditor 
+$3,225.43 USDC » @0xRobocop 
+$3,066.20 USDC » @HE1M 
+$2,962.84 USDC » @Sathish9098 
+$2,851.55 USDC » @Madalad 
+$2,276.11 USDC » @0xSmartContract 
+$2,259.93 USDC » @zzebra83 
+$2,105.21 USDC » @0xWaitress 
+$1,952.43 USDC » @chaduke 
+$1,913.39 USDC » @unsafesol (@Angry_Mustache_Man, @devblixt)
+$1,891.28 USDC » @n1punp 
+$1,887.10 USDC » @0xnev 
+$1,595.42 USDC » @0x007 
+$1,493.18 USDC » @c7e7eff/RustyRabbit 
+$1,399.23 USDC » @K42 Ψ 
+$1,399.23 USDC » @hunter_w3b 
+$1,348.77 USDC » @JCK 
+$1,310.69 USDC » @minhtrng 
+$1,300.81 USDC » @cryptonue  
+$1,273.03 USDC » @ayeslick 
+$1,270.76 USDC » 7e1e 
+$1,199.83 USDC » @glcanvas 
+$1,149.68 USDC » @erebus 
+$1,127.99 USDC » LosPollosHermanos (@scaraven, @jc1) 
+$1,078.89 USDC » @0xTheC0der 
+$1,066.66 USDC » BPZ (@Bitcoinfever244, @PrasadLak, @zinc42)
+$1,049.51 USDC » @adeolu 
+$1,008.34 USDC » @zhaojie 
+$930.38 USDC » @Rolezn  
+$889.21 USDC » @dharma09 
+$889.21 USDC » @ReyAdmirado 
+$889.21 USDC » @naman1778 
+$830.87 USDC » @0xfuje 
+$823.12 USDC » @Ruhum 
+$791.16 USDC » @jasonxiale 
+$635.24 USDC » plainshift (@surya, @thank_you) 
+$559.88 USDC » @0xrugpull_detector 
+$499.77 USDC » @Jaraxxus775  
+$486.19 USDC » @udsen_  
+$459.56 USDC » @mgf15 
+$459.56 USDC » @none 
+$404.78 USDC » @kodyvim 
+$387.52 USDC » @RedOneN  
+$381.84 USDC » @Kaysoft 
+$345.29 USDC » @kutu 
+$256.59 USDC » @Nyx 
+$251.47 USDC » @ltyu 
+$224.94 USDC » @rokinot 
+$200.47 USDC » @0xG0P1 
+$195.74 USDC » @andy  
+$182.53 USDC » @nadin 
+$182.53 USDC » @hassan-truscova 
+$173.00 USDC » gizzy
+$163.57 USDC » @Breeje 
+$150.72 USDC » @hendrik 
+$128.47 USDC » @Raihan 
+$123.66 USDC » @Brenzee 
+$123.66 USDC » @Winner 
+$117.59 USDC » @vagrant 
+$117.50 USDC » clash
+
+{Reactions}
+🔥 (12) ❤️ (8) 🙏 (2) 🚀 (2) 
+
+[10/13/2023 15:19] _paperparachute
+$117.50 USDC » @ak1 
+$100.17 USDC » @marcKn  
+$100.05 USDC » @tsvetanovv 
+$99.24 USDC » @Limbooo  
+$87.31 USDC » LeoS
+$87.31 USDC » @xfu 
+$87.31 USDC » @SAQ 
+$87.31 USDC » @smartstar 
+$87.31 USDC » @0xta 
+$87.31 USDC » @0xhex  
+$87.31 USDC » @ybansal2403  
+$87.31 USDC » @petrichor🦖 
+$87.31 USDC » @SY_S  
+$76.55 USDC » @IllIllI 
+$76.34 USDC » @DelerRH 
+$71.21 USDC » @dontonka 
+$71.21 USDC » @wangxx2026 
+$61.03 USDC » @cheapgemmer(hack3r-0m) 
+$58.89 USDC » @pks_  
+$56.17 USDC » @ACai
+$56.17 USDC » CrypticShepherd
+$56.17 USDC » @offside0011 
+$46.94 USDC » 0xSky 
+$46.37 USDC » @ck 
+$43.31 USDC » @iglyx  
+$41.16 USDC » @catwhiskeys 
+$41.16 USDC » @rumen 
+$41.16 USDC » @ABA 
+$41.16 USDC » @CryptoYulia 
+$41.16 USDC » @SooYa 
+$41.16 USDC » @hals 
+$41.16 USDC » @kaveyjoe 
+$41.16 USDC » @l3r0ux 
+$41.16 USDC » Tatakae (SaharDevep, @mahdikarimi) 
+$41.16 USDC » @audityourcontracts (AYC) 
+$41.16 USDC » Z3R0 
+$41.16 USDC » @SPYBOY 
+$41.16 USDC » @0xSmartContractSamurai 
+$41.16 USDC » @Deekshith99 
+$41.16 USDC » @Walter 
+$41.16 USDC » @John_Femi  
+$39.07 USDC » @0xadrii 
+$30.05 USDC » @Topmark 
+$20.42 USDC » @TiesStevelink  
+$20.42 USDC » @Oxsadeeq
+
+🏁 Findings summary
+--------------------------------------—
+High risk findings: 60 unique (228 total)
+Med risk findings: 96 unique (290 total)
+Gas reports: 19 total (Best: @Sathish9098) 
+QA reports: 79 total (Best: @0xSmartContract) 
+Advanced analysis reports: 20 total (Best: @Alex The Entreprenerd) 
+
+Awards will be distributed on Polygon within the next week. Congratulations all!  💸 💸 💸
+
+*Note: If you participated in this audit and don’t see your name on this list, please wait until the report is published and the findings repo is made public to check on your submissions.*
+
+{Reactions}
+❤️ (5) praisethesun (2) 
+
+[10/13/2023 15:19] ladboy233
+@Alex The Entreprenerd Congrats
+
+
+[10/13/2023 15:19] _paperparachute
+Woah, you guys actually waited
+
+
+[10/13/2023 15:19] _paperparachute
+I'm impressed
+
+{Reactions}
+😅 (8) 
+
+[10/13/2023 15:19] _paperparachute
+Such restraint!
+
+{Reactions}
+😂 (7) 
+
+[10/13/2023 15:19] peakbolt
+🫡 congrats @Alex The Entreprenerd
+
+{Reactions}
+cheers_badger (2) 
+
+[10/13/2023 15:20] sathish9098kumar
+@Alex The Entreprenerd congratulations
+
+{Reactions}
+cheers_badger 
+
+[10/13/2023 15:20] adeolu
+Congratulations ser @Alex The Entreprenerd
+
+{Reactions}
+cheers_badger 
+
+[10/13/2023 15:20] bizzyvinci
+You're only human after all
+
+
+[10/13/2023 15:20] nethoxa
+xD
+
+
+[10/13/2023 15:20] nethoxa
+https://tenor.com/view/yes-cute-puppy-dogs-waiting-gif-17573706
+
+{Embed}
+https://tenor.com/view/yes-cute-puppy-dogs-waiting-gif-17573706
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/yes-cute-D0011.png
+
+{Reactions}
+😂 😆 
+
+[10/13/2023 15:20] ladboy233
+yeap, two parts, external integration and layerzero integration cross chain part, I am missing the layerzero part completely because I do not know layerzero at that time
+
+
+[10/13/2023 15:20] ladboy233
+anyway,
+
+
+[10/13/2023 15:20] ladboy233
+very very good learning resources
+
+
+[10/13/2023 15:21] nethoxa
+https://tenor.com/view/fist-fight-film-ice-cube-its-on-gif-6046519
+
+{Embed}
+https://tenor.com/view/fist-fight-film-ice-cube-its-on-gif-6046519
+It's on
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/fist-fight-film-ice-cube-0A9AA.png
+
+
+[10/13/2023 15:21] nethoxa
+@Alex The Entreprenerd
+
+{Reactions}
+cheers_badger 
+
+[10/13/2023 15:21] mgf15
+I forgot about this one 😅 LOL
+
+
+[10/13/2023 15:21] bizzyvinci
+60 H
+96 M
+🤯
+
+{Reactions}
+4739_Skeletor 
+
+[10/13/2023 15:22] devblixt_
+thank you guys, this is lovely!
+
+
+[10/13/2023 15:22] _paperparachute
+Don't spend all your $5 at once!
+
+{Reactions}
+😅 😂 (4) 
+
+[10/13/2023 15:22] _paperparachute
+Congrats guys, have a great weekend!
+
+
+[10/13/2023 15:23] devblixt_
+i will spread it out in 10 different ofac compliant transactions :pepedance:
+
+
+[10/13/2023 15:23] nethoxa
+xD
+
+{Reactions}
+😂 
+
+[10/13/2023 15:24] _paperparachute
+Imagine writing the report
+
+{Reactions}
+🫂 
+
+[10/13/2023 15:24] _paperparachute
+https://tenor.com/view/this-is-fine-gif-24177057
+
+{Embed}
+https://tenor.com/view/this-is-fine-gif-24177057
+Code4rena - ARCHIVE-Q3-2023 - tapioca-jul05 [1125494082375000244].txt_Files/this-is-9FDD8.png
+
+{Reactions}
+evillaughlaugh (3) 
+
+[10/13/2023 15:26] carrotsmuggler
+wow congrats @Alex The Entreprenerd
+
+
+[10/13/2023 15:34] alextheentreprenerd
+2 years, 1 contest won, ama
+
+{Reactions}
+🙌 (33) hi5 (11) dance (3) 
+
+[10/13/2023 15:35] whitehat.eth
+One, but huge.
+
+
+[10/13/2023 15:35] whitehat.eth
+:10_10:
+
+
+[10/13/2023 15:35] 0xnevi
+Are you a goat?
+
+
+[10/13/2023 15:37] mike_bello90
+congrats to all the winners!!
+
+
+[10/13/2023 15:38] mike_bello90
+cannot wait to be like you guys!! 😄
+
+
+[10/13/2023 15:44] kirkeelee
+Put "dm for audits" in your bio. :chefskiss:
+
+
+[10/13/2023 15:45] nethoxa
+DM FOR AUDITS
+
+
+[10/13/2023 15:45] alextheentreprenerd
+:praisethesun:
+
+
+[10/13/2023 15:47] koolexc
+Congrats 👏 @Alex The Entreprenerd
+
+{Reactions}
+cheers_badger 
+
+[10/13/2023 15:51] zzebra83
+Congrats @Alex The Entreprenerd @peakbolt !
+
+{Reactions}
+cheers_badger (2) 
+
+[10/13/2023 15:58] windhustler
+Congrats everyone
+
+
+[10/13/2023 15:58] 0xnevi
+Big congrats to my buddys on the top 5 @peakbolt @windhustler @carrotsmuggler @TrungOre 
+
+And ofc the ever amazing judge @Alex The Entreprenerd for ranking first
+
+{Reactions}
+praisethesun (3) 🧑‍🍳 
+
+[10/13/2023 16:03] devblixt_
+Also congrats to my mentor @cergyk , one of the most talented guys in the space!!
+
+{Reactions}
+🔥 🙏 
+
+[10/13/2023 16:05] cergyk
+Congrats to you as well ser, well done!!
+
+{Reactions}
+❤️ dance_vibe 
+
+[10/13/2023 16:08] t1moh
+@windhustler Congrats! Well deserved!!
+
+{Reactions}
+🔥 (2) 
+
+[10/13/2023 16:08] pavankv
+Congrats @Sathish9098 for best report..
+
+{Reactions}
+👍 (3) 
+
+[10/13/2023 16:08] sathish9098kumar
+Thank you 😊
+
+{Reactions}
+🫡 (2) 
+
+[10/13/2023 16:11] udsen_
+Congratulations @Alex The Entreprenerd and all the winners !!!
+
+{Reactions}
+praisethesun (2) 
+
+[10/13/2023 16:13] dharma09
+Congrats @Sathish9098  for best gas report
+
+{Reactions}
+hi5 (2) 
+
+[10/13/2023 16:13] sathish9098kumar
+Thank you
+
+
+[10/13/2023 16:19] hendrik#0065
+Congrats all
+
+
+[10/13/2023 16:19] olanre_waju
+Congratulations @adeolu 👏💯
+
+{Reactions}
+❤️ (3) 🇳🇬 (3) 
+
+[10/13/2023 16:19] adeolu
+Thanks g.
+
+
+[10/13/2023 16:27] c145h
+Thank you all!
+
+
+[10/13/2023 16:29] t1moh
+@peakbolt @0xStalin Congrats you too!
+
+{Reactions}
+🫡 (2) 
+
+[10/13/2023 16:34] 0xtendency
+Congratulations @0xStalin
+
+{Reactions}
+🫡 (2) 
+
+[10/13/2023 16:38] angry_mustache_man
+Congrajulations to @cergyk and @0xStalin 👏💯🎉
+
+{Reactions}
+🔥 (2) 🫡 (2) 
+
+[10/13/2023 16:41] 0xstalin
+Ty sers 🫡
+
+
+[10/13/2023 17:35] 0xsorrynotsorry
+Never seen anything like this. Congratulations all 🎉what a nice start @windhustler  :chefskiss:
+
+{Reactions}
+🔥 (4) 
+
+[10/13/2023 17:42] windhustler
+Thanks 😄
+
+{Reactions}
+🫡 (2) 
+
+[10/13/2023 17:43] windhustler
+Does anyone know what is the fastest way of getting the backstage role? I'm already certified.
+
+
+[10/13/2023 17:44] 0xsorrynotsorry
+Submit a help request and the team would handle this week
+
+{Reactions}
+🔥 (2) 
+
+[10/13/2023 17:51] mgf15
+3 digts for QA nice :chefskiss:
+
+{Reactions}
+👍 (2) 
+
+[10/13/2023 18:43] tolahash
+@Alex The Entreprenerd congratulations ser
+
+{Reactions}
+praisethesun (2) 
+
+[10/13/2023 21:16] mosharaf
+@carrotsmuggler submitted 18 valid highs alone. 🫡🫡
+Big Salute ser.
+
+{Reactions}
+💜 (3) 
+
+[10/13/2023 21:20] reentrant
+woot woot RED-LOTUS-TEAM on this leaderboard again under the pseudonym 7e1e
+
+
+[10/13/2023 21:23] reentrant
+shoutout to @escrow @BlockChomper (GMT +4) @cholakov , all who were chads that joined on for this contest
+
+{Reactions}
+🔥 (4) 
+
+[10/13/2023 21:23] reentrant
+another REACH team
+
+
+[10/13/2023 21:24] reentrant
+:dance:
+
+
+[10/13/2023 21:25] reentrant
+earned that!
+
+
+[10/13/2023 21:26] reentrant
+you're always on those boards, too. Same respect and humility bro, 🙏
+
+{Reactions}
+👀 👍 
+
+[10/13/2023 21:59] 0xnevi
+Congrats red lotus!!!
+
+
+[10/13/2023 22:05] reentrant
+thanks @0xnev
+
+{Reactions}
+❤️ (2) 
+
+[10/13/2023 22:07] reentrant
+tbf the vulns and analysis are split for us b/c I was confused w/ the profile system
+
+
+[10/13/2023 22:07] reentrant
+but @Jay | C4 helped me out big time figuring things out 🙏
+
+{Reactions}
+💜 (2) hi5 (2) 
+
+[10/16/2023 02:31] twmatt
+Thanks to each and every one of you!Excited to get to the mitigation review!
+
+{Reactions}
+👍 (11) chefskiss (7) praisethesun 
+
+==============================================================
+Exported 637 message(s)
+==============================================================
